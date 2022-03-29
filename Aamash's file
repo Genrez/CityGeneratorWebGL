@@ -1,1 +1,142 @@
+<html>
+  <head>
+    <title>Simple Geometry Test</title>
+  </head>
+
+  <style>
+  body {margin: 0;}
+  canvas {width: 100%; height: 100%;}
+  </style>
+
+  <body>
+    <!--include the three.js library-->
+   <script src="js/three.js"> </script>
+   <!--and the trackball code-->
+   <script src="js/OrbitControls.js"> </script>
+   <!--the model loader-->
+   <script src="js/PLYLoader.js"></script>
+
+    <style>
+    			body {
+    				font-family: Monospace;
+    				background-color: #000;
+    				color: #fff;
+    				margin: 0px;
+    				overflow: hidden;
+    			}
+    			#info {
+    				position: absolute;
+    				top: 10px;
+    				width: 100%;
+    				text-align: center;
+    			}
+    </style>
+
+    <div id="info">
+      <p>This is the first example using threeJS<br>
+      left button to rotate the scene, scroll to zoom in/out</p>
+    </div>
+    <script>
+
+    //create the scene
+    var scene = new THREE.Scene( );
+    var ratio = window.innerWidth/window.innerHeight;
+    //create the perspective camera
+    //for parameters see https://threejs.org/docs/#api/cameras/PerspectiveCamera
+    var camera = new THREE.PerspectiveCamera(45,ratio,0.1,1000);
+
+    //set the camera position
+    camera.position.set(0,0,15);
+    // and the direction
+	  camera.lookAt(0,0,1);
+
+    //create the webgl renderer
+    var renderer = new THREE.WebGLRenderer( );
+
+    //set the size of the rendering window
+    renderer.setSize(window.innerWidth,window.innerHeight);
+
+    //add the renderer to the current document
+    document.body.appendChild(renderer.domElement );
+
+
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+  //final update loop
+  var MyUpdateLoop = function ( )
+  {
+    //call the render with the scene and the camera
+    renderer.render(scene,camera);
+
+    controls.update();
+
+    //finally perform a recoursive call to update again
+    //this must be called because the mouse change the camera position
+    requestAnimationFrame(MyUpdateLoop);
+
+  };
+
+  requestAnimationFrame(MyUpdateLoop);
+
+
+  //this fucntion is called when the window is resized
+  var MyResize = function ( )
+  {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    renderer.setSize(width,height);
+    camera.aspect = width/height;
+    camera.updateProjectionMatrix();
+    renderer.render(scene,camera);
+  };
+
+  //link the resize of the window to the update of the camera
+  window.addEventListener( 'resize', MyResize);
+
+
+  //MESH LOADING
+ var loader = new THREE.PLYLoader();
+ var mesh = null;
+ loader.load('models/pieta.ply', function ( geometry )
+ {
+      var material = new THREE.MeshPhongMaterial();
+      material.color= new THREE.Color(0.8,1,1);
+      material.wireframe=false;
+      material.shininess=100;
+      geometry.computeVertexNormals();
+      mesh = new THREE.Mesh( geometry, material );
+
+      geometry.computeBoundingBox();
+
+      var center = new THREE.Vector3();
+      var size = new THREE.Vector3();
+      geometry.boundingBox.getCenter(center);
+      geometry.boundingBox.getSize(size);
+      var min = geometry.boundingBox.min;
+
+      var sca = new THREE.Matrix4();
+      var tra = new THREE.Matrix4();
+      var combined = new THREE.Matrix4();
+
+      sca.makeScale(20/size.length(),20/size.length(),20/size.length());
+      tra.makeTranslation (-center.x,-center.y,-center.z);
+      combined.multiply(sca);
+      combined.multiply(tra);
+
+      mesh.applyMatrix(combined);
+
+      scene.add( mesh );
+    } );
+
+    //lighting
+    //basic light from camera towards the scene
+    var cameralight = new THREE.PointLight( new THREE.Color(1,1,1), 0.5 );
+    camera.add( cameralight );
+    scene.add(camera);
+    var ambientlight = new THREE.AmbientLight(new THREE.Color(1,1,1),0.2);
+    scene.add(ambientlight);
+
+    </script>
+  </body>
+</html>
 
