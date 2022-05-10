@@ -85,6 +85,29 @@
 			var min;
 			var max;
 
+			function createGround(scene) {
+				const groundGeometry = new THREE.PlaneGeometry(1000, 1000, 500, 500);
+
+				let map = new THREE.TextureLoader()
+				.setPath("./heightmap")
+				.load("heightmap.png");
+
+				map.wrapS = map.mapT = THREE.RepeatWrapping;
+				map.repeat.set(20, 20);
+
+				const groundMaterial = new THREE.MeshStandardMaterial({
+					color: 0x000000,
+					wireframe: true,
+					displacementMap: map,
+					displacementScale: 0.1
+				})
+
+				groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+				scene.add(groundMesh);
+				groundMesh.rotation.x = -Math.PI / 2;
+				groundMesh.position.y = -0.5;
+			}
+
 
 			function init() {
 
@@ -96,6 +119,22 @@
 				camera.lookAt(Dir.x,Dir.y,Dir.z);
 
 				scene = new THREE.Scene();
+
+				createGround(scene);
+				 
+				let sun = new THREE.DirectionalLight(0xFFFFFF, 50.0);
+				sun.position.set(2,10,1);
+				sun.target.position.set(0,0,0);
+
+				scene.add(sun);
+				scene.add(sun.target);
+
+				// var geometry = new THREE.PlaneBufferGeometry( 300, 300 );
+				// var material = new THREE.MeshStandardMaterial({ color: 0xff1100 });
+
+				// var mesh = new THREE.Mesh( geometry, material );
+
+				// scene.add( mesh );
 
 				controls = new THREE.PointerLockControls( camera );
 
@@ -175,21 +214,21 @@
 				document.addEventListener( 'keydown', onKeyDown, false );
 				document.addEventListener( 'keyup', onKeyUp, false );
 
-				var material_floor = new THREE.MeshBasicMaterial();
-				material_floor.shininess=100;
-				material_floor.wireframe = true;
-				material_floor.color=  new THREE.Color(0.8,0.9,0.3);
-				var geometry_floor = new THREE.BoxGeometry(100,2,100,32,1,32);
-				var meshFloor= new THREE.Mesh( geometry_floor, material_floor );
-				scene.add( meshFloor );
+				// var material_floor = new THREE.MeshBasicMaterial();
+				// material_floor.shininess=100;
+				// material_floor.wireframe = true;
+				// material_floor.color=  new THREE.Color(0.8,0.9,0.3);
+				// var geometry_floor = new THREE.BoxGeometry(100,2,100,32,1,32);
+				// var meshFloor= new THREE.Mesh( geometry_floor, material_floor );
+				// scene.add( meshFloor );
 
-				meshFloor.geometry.computeBoundingBox();
-				box.copy( meshFloor.geometry.boundingBox );
-				min = box.min;
-				max = box.max;
-				console.log(min.x);
-				console.log(max);
-				console.log(controls.getObject().position.x);
+				// meshFloor.geometry.computeBoundingBox();
+				// box.copy( meshFloor.geometry.boundingBox );
+				// min = box.min;
+				// max = box.max;
+				// console.log(min.x);
+				// console.log(max);
+				// console.log(controls.getObject().position.x);
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -244,34 +283,34 @@
 
 				}
 
-				//Collision detection for plane edges
-				if (controls.getObject().position.x < min.x) {
-					if ( moveForward || moveBackward ) velocity.z = 10;
-					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 10;
-					if ( moveLeft || moveRight ) velocity.x = 10;
-					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 10;
-				}
+				// //Collision detection for plane edges
+				// if (controls.getObject().position.x < min.x) {
+				// 	if ( moveForward || moveBackward ) velocity.z = 10;
+				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 10;
+				// 	if ( moveLeft || moveRight ) velocity.x = 10;
+				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 10;
+				// }
 
-				if (controls.getObject().position.x > max.x) {
-					if ( moveForward || moveBackward ) velocity.z = -10;
-					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -10;
-					if ( moveLeft || moveRight ) velocity.x = -10;
-					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -10;
-				}
+				// if (controls.getObject().position.x > max.x) {
+				// 	if ( moveForward || moveBackward ) velocity.z = -10;
+				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -10;
+				// 	if ( moveLeft || moveRight ) velocity.x = -10;
+				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -10;
+				// }
 
-				if (controls.getObject().position.z < min.z) {
-					if ( moveForward || moveBackward ) velocity.z = 10;
-					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 10;
-					if ( moveLeft || moveRight ) velocity.x = 10;
-					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 10;
-				}
+				// if (controls.getObject().position.z < min.z) {
+				// 	if ( moveForward || moveBackward ) velocity.z = 10;
+				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 10;
+				// 	if ( moveLeft || moveRight ) velocity.x = 10;
+				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 10;
+				// }
 
-				if (controls.getObject().position.z > max.z) {
-					if ( moveForward || moveBackward ) velocity.z = -10;
-					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -10;
-					if ( moveLeft || moveRight ) velocity.x = -10;
-					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -10;
-				}
+				// if (controls.getObject().position.z > max.z) {
+				// 	if ( moveForward || moveBackward ) velocity.z = -10;
+				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -10;
+				// 	if ( moveLeft || moveRight ) velocity.x = -10;
+				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -10;
+				// }
 
 				renderer.render( scene, camera );
 			}
