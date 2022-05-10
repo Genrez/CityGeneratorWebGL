@@ -253,7 +253,9 @@
 					if ( moveLeft || moveRight ) velocity.x -= direction.x * 450.0 * delta;
 					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x -= direction.x * 500.0 * delta;
 					if ( space ) {
-						velocity.y += 1 * 500.0 * delta;
+						if ( controls.getObject().position.y < 7) {
+							velocity.y += 1 * 500.0 * delta;
+						}
 					}
 
 
