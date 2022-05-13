@@ -10,7 +10,6 @@ camera.rotation.y = Math.PI/4;
 camera.rotation.z = Math.PI/4;
 
  
-
 var renderer = new THREE.WebGLRenderer( ); 
 renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement );
