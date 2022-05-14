@@ -35,9 +35,7 @@ function createPathStrings(filename) {
    const sides = ["front", "back", "up", "down", "right", "left"];
    const pathStings = sides.map(side => {
    return baseFilename + "_" + side + fileType;
- 
    });
- 
    return pathStings;
  }
 
