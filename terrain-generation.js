@@ -34,6 +34,7 @@ function createMountain(mountainGeometry, mountainMaterial, x, z) {
     mountainMesh.rotation.x = -Math.PI / 2;
     mountainMesh.position.x = x;
     mountainMesh.position.z = z;
+    mountainMesh.position.y = 0.5;
     return mountainMesh;
 }
 

@@ -207,29 +207,29 @@
 				document.addEventListener( 'keydown', onKeyDown, false );
 				document.addEventListener( 'keyup', onKeyUp, false );
 
-				var material_cube = new THREE.MeshBasicMaterial();
-				material_cube.color=  new THREE.Color(5,1,1);
-				var geometry_cube = new THREE.BoxGeometry(5,5,5);
-   				var cube_mesh = new THREE.Mesh(geometry_cube,material_cube);
-    			cube_mesh.position.x=10;
-				cube_mesh.position.y=3.5;
-    			scene.add(cube_mesh);
+				// var material_cube = new THREE.MeshBasicMaterial();
+				// material_cube.color=  new THREE.Color(5,1,1);
+				// var geometry_cube = new THREE.BoxGeometry(5,5,5);
+   				// var cube_mesh = new THREE.Mesh(geometry_cube,material_cube);
+    			// cube_mesh.position.x=10;
+				// cube_mesh.position.y=3.5;
+    			// scene.add(cube_mesh);
 
-				var material_floor = new THREE.MeshBasicMaterial();
-				material_floor.shininess=100;
-				material_floor.wireframe = true;
-				material_floor.color=  new THREE.Color(0.8,0.9,0.3);
-				var geometry_floor = new THREE.BoxGeometry(100,2,100,32,1,32);
-				var meshFloor= new THREE.Mesh( geometry_floor, material_floor );
-				scene.add( meshFloor );
+				// var material_floor = new THREE.MeshBasicMaterial();
+				// material_floor.shininess=100;
+				// material_floor.wireframe = true;
+				// material_floor.color=  new THREE.Color(0.8,0.9,0.3);
+				// var geometry_floor = new THREE.BoxGeometry(100,2,100,32,1,32);
+				// var meshFloor= new THREE.Mesh( geometry_floor, material_floor );
+				// scene.add( meshFloor );
 
-				meshFloor.geometry.computeBoundingBox();
-				box.copy( meshFloor.geometry.boundingBox );
-				min = box.min;
-				max = box.max;
-				console.log(min.x);
-				console.log(max);
-				console.log(controls.getObject().position.x);
+				// meshFloor.geometry.computeBoundingBox();
+				// box.copy( meshFloor.geometry.boundingBox );
+				// min = box.min;
+				// max = box.max;
+				// console.log(min.x);
+				// console.log(max);
+				// console.log(controls.getObject().position.x);
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -287,29 +287,29 @@
 
 				}
 
-				// //Collision detection for plane edges
-				// if (controls.getObject().position.x < min.x) {
+				//Collision detection for plane edges
+				// if (controls.getObject().position.x < -900) {
 				// 	if ( moveForward || moveBackward ) velocity.z = 10;
 				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 10;
 				// 	if ( moveLeft || moveRight ) velocity.x = 10;
 				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 10;
 				// }
 
-				// if (controls.getObject().position.x > max.x) {
+				// if (controls.getObject().position.x > 900) {
 				// 	if ( moveForward || moveBackward ) velocity.z = -10;
 				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -10;
 				// 	if ( moveLeft || moveRight ) velocity.x = -10;
 				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -10;
 				// }
 
-				// if (controls.getObject().position.z < min.z) {
+				// if (controls.getObject().position.z < -900) {
 				// 	if ( moveForward || moveBackward ) velocity.z = 10;
 				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 10;
 				// 	if ( moveLeft || moveRight ) velocity.x = 10;
 				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 10;
 				// }
 
-				// if (controls.getObject().position.z > max.z) {
+				// if (controls.getObject().position.z > 900) {
 				// 	if ( moveForward || moveBackward ) velocity.z = -10;
 				// 	if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -10;
 				// 	if ( moveLeft || moveRight ) velocity.x = -10;
