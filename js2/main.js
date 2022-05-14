@@ -1,6 +1,6 @@
 var scene = new THREE.Scene( );
 var ratio = window.innerWidth/window.innerHeight;
-var camera = new THREE.PerspectiveCamera(80,ratio,5,500000);
+var camera = new THREE.PerspectiveCamera(80,ratio,5,5000000);
 
 var Pos = new THREE.Vector3(-360, 700, 360);
 camera.position.set(Pos.x, Pos.y, Pos.z);
@@ -26,6 +26,11 @@ plane.rotation.set(Math.PI / 2, 0, 0);
 plane.receiveShadow = true;
 plane.castShadow = false;
 scene.add( plane );
+
+//Skybox
+skyboxGeo = new THREE.BoxGeometry(40000, 40000, 40000);
+skybox = new THREE.Mesh(skyboxGeo);
+scene.add(skybox);
 
 //Lighting
 const color = 0xFFFFFF;
