@@ -40,7 +40,7 @@ function createPathStrings(filename) {
    const basePath = "./img/Skyboxes/";
    const baseFilename = basePath + filename;
    const fileType = ".png";
-   const sides = ["front", "back", "up", "down", "right", "left"];
+   const sides = ["ft", "bk", "up", "dn", "rt", "lf"];
    const pathStings = sides.map(side => {
    return baseFilename + "_" + side + fileType;
    });
@@ -57,7 +57,10 @@ function createMaterialArray(filename) {
  }
 
 const skyboxImage = 'skybox';
-const materialArray = createMaterialArray(skyboxImage);
+const skyboxImage2 = 'clouds';
+const skyboxImage3 = 'clouds2';
+const skyboxImage4 = 'interstellar';
+const materialArray = createMaterialArray(skyboxImage2);
 skyboxGeo = new THREE.BoxGeometry(60000, 60000, 60000);
 skybox = new THREE.Mesh(skyboxGeo, materialArray);
 scene.add(skybox);
