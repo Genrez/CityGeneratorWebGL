@@ -34,7 +34,6 @@ sun.target.position.set(0,0,0);
 scene.add(sun);
 scene.add(sun.target);
 
-
 //Skybox
 function createPathStrings(filename) {
    const basePath = "./img/Skyboxes/";
