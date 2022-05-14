@@ -6,8 +6,6 @@ function generateBuilding(number) {
     var mesh = null;
     loader.load('models/Building' + number + '.ply', function (geometry) {
         var material = new THREE.MeshPhongMaterial();
-        //material.color = new THREE.Color(r, g, b);
-        material.shininess = 50;
         geometry.computeVertexNormals();
         mesh = new THREE.Mesh(geometry, material);
         mesh.name = "building";
@@ -26,6 +24,8 @@ function generateBuilding(number) {
 function generateBase() {
 
 }
+
+generateBuilding(1);
 
 
 

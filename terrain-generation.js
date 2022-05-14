@@ -2,10 +2,10 @@ function createTerrain(scene) {
     createAshphalt(scene);
     createMountains(scene);
 }
-createAshphalt(scene);
-createMountains(scene);
+createAshphalt();
+createMountains();
 
-function createMountains(scene) {
+function createMountains() {
     const mountainGeometry = new THREE.PlaneGeometry(900,900, 500, 500);
 
     let mountainDisplacementMap = new THREE.TextureLoader()
@@ -40,7 +40,7 @@ function createMountain(mountainGeometry, mountainMaterial, x, z) {
     return mountainMesh;
 }
 
-function createAshphalt(scene) {
+function createAshphalt() {
     const cityGeometry = new THREE.PlaneGeometry(100, 100, 500, 500);
 
     let asphaltDisplacementMap = new THREE.TextureLoader()
@@ -94,6 +94,3 @@ function createAshphaltMesh(cityGeometry, asphaltMaterial) {
     return ashphaltMesh;
 }
 
-function generateBuildings(scene) {
-    
-}

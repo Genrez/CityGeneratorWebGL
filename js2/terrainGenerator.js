@@ -92,6 +92,3 @@ function createAshphaltMesh(cityGeometry, asphaltMaterial) {
     return ashphaltMesh;
 }
 
-function generateBuildings(scene) {
-    
-}
