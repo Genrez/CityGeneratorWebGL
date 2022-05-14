@@ -28,8 +28,37 @@ plane.castShadow = false;
 scene.add( plane );
 
 //Skybox
+function createPathStrings(filename) {
+   const basePath = "./img/Skyboxes";
+   const baseFilename = basePath + filename;
+   const fileType = ".png";
+   const sides = ["front", "back", "up", "downn", "right", "left"];
+   const pathStings = sides.map(side => {
+ 
+     return baseFilename + "_" + side + fileType;
+ 
+   });
+ 
+   return pathStings;
+ }
+
+function createMaterialArray(filename) {
+   const skyboxImagepaths = createPathStrings(filename);
+   const materialArray = skyboxImagepaths.map(image => {
+   let texture = new THREE.TextureLoader().load(image);
+   return new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }); // <---
+ 
+   });
+ 
+   return materialArray;
+ 
+ }
+
+const skyboxImage = 'skybox';
+
+const materialArray = createMaterialArray(skyboxImage);
 skyboxGeo = new THREE.BoxGeometry(40000, 40000, 40000);
-skybox = new THREE.Mesh(skyboxGeo);
+skybox = new THREE.Mesh(skyboxGeo, materialArray);
 scene.add(skybox);
 
 //Lighting
