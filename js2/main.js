@@ -27,6 +27,7 @@ plane.receiveShadow = true;
 plane.castShadow = false;
 scene.add( plane );
 
+
 //Skybox
 function createPathStrings(filename) {
    const basePath = "./img/Skyboxes/";
