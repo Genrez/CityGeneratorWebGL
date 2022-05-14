@@ -13,7 +13,7 @@ document.body.appendChild(renderer.domElement );
 scene.background = new THREE.Color( 0x8fd9d9 );
 
 //Plane
-var dirtTexture = new THREE.TextureLoader().load("textures/Dirt1.jpg");
+/*var dirtTexture = new THREE.TextureLoader().load("textures/Dirt1.jpg");
 var geometry = new THREE.PlaneGeometry(60000,60000);
 var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
 material.map = dirtTexture;
@@ -26,6 +26,13 @@ plane.rotation.set(Math.PI / 2, 0, 0);
 plane.receiveShadow = true;
 plane.castShadow = false;
 scene.add( plane );
+*/
+//PointLight
+let sun = new THREE.DirectionalLight(0xFFFFFF, 1);
+sun.position.set(2,10,1);
+sun.target.position.set(0,0,0);
+scene.add(sun);
+scene.add(sun.target);
 
 
 //Skybox
@@ -65,7 +72,6 @@ function onWindowResize() {
 
 function animate() {
    //skybox.rotation.x += 0.005;
-
    requestAnimationFrame( animate );
    render();
 }

@@ -2,6 +2,8 @@ function createTerrain(scene) {
     createAshphalt(scene);
     createMountains(scene);
 }
+createAshphalt(scene);
+createMountains(scene);
 
 function createMountains(scene) {
     const mountainGeometry = new THREE.PlaneGeometry(900,900, 500, 500);
