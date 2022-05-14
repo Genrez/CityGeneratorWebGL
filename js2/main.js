@@ -29,7 +29,7 @@ scene.add( plane );
 
 //Skybox
 function createPathStrings(filename) {
-   const basePath = "./img/Skyboxes";
+   const basePath = "./img/Skyboxes/";
    const baseFilename = basePath + filename;
    const fileType = ".png";
    const sides = ["front", "back", "up", "down", "right", "left"];
@@ -45,9 +45,7 @@ function createMaterialArray(filename) {
    let texture = new THREE.TextureLoader().load(image);
    return new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }); // <---
    });
- 
    return materialArray;
- 
  }
 
 const skyboxImage = 'skybox';
@@ -58,22 +56,23 @@ scene.add(skybox);
 
 controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-var MyUpdateLoop = function ( )
-{
-   renderer.render(scene,camera);
-   controls.update();
-   requestAnimationFrame(MyUpdateLoop);
-};
-requestAnimationFrame(MyUpdateLoop);
+function onWindowResize() {
+   camera.aspect = window.innerWidth / window.innerHeight;
+   camera.updateProjectionMatrix();
+   renderer.setSize( window.innerWidth, window.innerHeight );
+}
 
-var MyResize = function ( )
+function animate() {
+   skybox.rotation.x += 0.005;
+
+   requestAnimationFrame( animate );
+   render();
+}
+
+function render() 
 {
-var width = window.innerWidth;
-var height = window.innerHeight;
-renderer.setSize(width,height);
-camera.aspect = width/height;
-camera.updateProjectionMatrix();
-renderer.render(scene,camera);
-};
-window.addEventListener( 'resize', MyResize);
+
+	renderer.render( scene, camera );
+}
+	animate();
 
