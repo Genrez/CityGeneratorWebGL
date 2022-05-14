@@ -55,6 +55,7 @@
 		<script src="js/three.js"></script>
 		<script src="js/PointerLockControls.js"></script>
 
+		<div id="mapCanvas" style="position: absolute; left:100px; top:100px; width:320px; height:240px;"></div>
 		<div id="blocker">
 
 			<div id="instructions">
@@ -66,6 +67,7 @@
 		<script>
 
 			var camera, scene, renderer, controls;
+			var mapCamera, mapWidth = 240, mapHeight = 160;
 
 
 			var controlsEnabled = true;
@@ -110,6 +112,7 @@
 
 
 			function init() {
+				scene = new THREE.Scene();
 
 				var ratio = window.innerWidth/window.innerHeight;
 				camera = new THREE.PerspectiveCamera(45,ratio,0.00001,1000);
@@ -117,8 +120,21 @@
 				camera.position.set(Pos.x,Pos.y,Pos.z);
 				var Dir = new THREE.Vector3(0,0,1);
 				camera.lookAt(Dir.x,Dir.y,Dir.z);
+				scene.add(camera);
 
-				scene = new THREE.Scene();
+				// orthographic cameras
+				mapCamera = new THREE.OrthographicCamera(
+				window.innerWidth / -20,		// Left
+				window.innerWidth / 20,		// Right
+				window.innerHeight / 20,		// Top
+				window.innerHeight / -20,	// Bottom
+				-5000,            			// Near 
+				10000 );           			// Far 
+				mapCamera.up = new THREE.Vector3(0,0,-1);
+				mapCamera.lookAt( new THREE.Vector3(0,-1,0) );
+				scene.add(mapCamera);
+
+				
 
 				createGround(scene);
 				 
@@ -214,21 +230,29 @@
 				document.addEventListener( 'keydown', onKeyDown, false );
 				document.addEventListener( 'keyup', onKeyUp, false );
 
-				// var material_floor = new THREE.MeshBasicMaterial();
-				// material_floor.shininess=100;
-				// material_floor.wireframe = true;
-				// material_floor.color=  new THREE.Color(0.8,0.9,0.3);
-				// var geometry_floor = new THREE.BoxGeometry(100,2,100,32,1,32);
-				// var meshFloor= new THREE.Mesh( geometry_floor, material_floor );
-				// scene.add( meshFloor );
+				var material_cube = new THREE.MeshBasicMaterial();
+				material_cube.color=  new THREE.Color(5,1,1);
+				var geometry_cube = new THREE.BoxGeometry(5,5,5);
+   				var cube_mesh = new THREE.Mesh(geometry_cube,material_cube);
+    			cube_mesh.position.x=10;
+				cube_mesh.position.y=3.5;
+    			scene.add(cube_mesh);
 
-				// meshFloor.geometry.computeBoundingBox();
-				// box.copy( meshFloor.geometry.boundingBox );
-				// min = box.min;
-				// max = box.max;
-				// console.log(min.x);
-				// console.log(max);
-				// console.log(controls.getObject().position.x);
+				var material_floor = new THREE.MeshBasicMaterial();
+				material_floor.shininess=100;
+				material_floor.wireframe = true;
+				material_floor.color=  new THREE.Color(0.8,0.9,0.3);
+				var geometry_floor = new THREE.BoxGeometry(100,2,100,32,1,32);
+				var meshFloor= new THREE.Mesh( geometry_floor, material_floor );
+				scene.add( meshFloor );
+
+				meshFloor.geometry.computeBoundingBox();
+				box.copy( meshFloor.geometry.boundingBox );
+				min = box.min;
+				max = box.max;
+				console.log(min.x);
+				console.log(max);
+				console.log(controls.getObject().position.x);
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -248,6 +272,7 @@
 			function animate() {
 
 				requestAnimationFrame( animate );
+				render();
 
 				if ( controlsEnabled == true ) {
 
@@ -267,7 +292,9 @@
 					if ( moveLeft || moveRight ) velocity.x -= direction.x * 450.0 * delta;
 					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x -= direction.x * 500.0 * delta;
 					if ( space ) {
-						velocity.y += 1 * 500.0 * delta;
+						if ( controls.getObject().position.y < 7) {
+							velocity.y += 1 * 500.0 * delta;
+						}
 					}
 
 
@@ -312,8 +339,30 @@
 				// 	if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -10;
 				// }
 
-				renderer.render( scene, camera );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setClearColor( 0x000000, 1 );
+				renderer.autoClear = false;
+				
 			}
+
+function render() 
+{
+	var w = window.innerWidth, h = window.innerHeight;
+
+	// setViewport parameters:
+	//  lower_left_x, lower_left_y, viewport_width, viewport_height
+	renderer.setViewport( 0, 0, w, h );
+	renderer.clear();
+	
+	// full display
+	// renderer.setViewport( 0, 0, SCREEN_WIDTH - 2, 0.5 * SCREEN_HEIGHT - 2 );
+	renderer.render( scene, camera );
+	
+	// minimap (overhead orthogonal camera)
+	//  lower_left_x, lower_left_y, viewport_width, viewport_height
+	renderer.setViewport( 10, h - mapHeight - 10, mapWidth, mapHeight );
+	renderer.render( scene, mapCamera );
+}
 			animate();
 
 		</script>
