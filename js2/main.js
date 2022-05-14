@@ -32,10 +32,9 @@ function createPathStrings(filename) {
    const basePath = "./img/Skyboxes";
    const baseFilename = basePath + filename;
    const fileType = ".png";
-   const sides = ["front", "back", "up", "downn", "right", "left"];
+   const sides = ["front", "back", "up", "down", "right", "left"];
    const pathStings = sides.map(side => {
- 
-     return baseFilename + "_" + side + fileType;
+   return baseFilename + "_" + side + fileType;
  
    });
  
@@ -47,7 +46,6 @@ function createMaterialArray(filename) {
    const materialArray = skyboxImagepaths.map(image => {
    let texture = new THREE.TextureLoader().load(image);
    return new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }); // <---
- 
    });
  
    return materialArray;
@@ -55,17 +53,10 @@ function createMaterialArray(filename) {
  }
 
 const skyboxImage = 'skybox';
-
 const materialArray = createMaterialArray(skyboxImage);
-skyboxGeo = new THREE.BoxGeometry(40000, 40000, 40000);
+skyboxGeo = new THREE.BoxGeometry(60000, 60000, 60000);
 skybox = new THREE.Mesh(skyboxGeo, materialArray);
 scene.add(skybox);
-
-//Lighting
-const color = 0xFFFFFF;
-const intensity = 1;
-const light = new THREE.AmbientLight(color, intensity);
-scene.add(light);
 
 controls = new THREE.OrbitControls( camera, renderer.domElement );
 
