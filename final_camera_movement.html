@@ -54,6 +54,7 @@
 	<body>
 		<script src="js/three.js"></script>
 		<script src="js/PointerLockControls.js"></script>
+		<script src="./terrain-generation.js"></script>
 
 		<div id="mapCanvas" style="position: absolute; left:100px; top:100px; width:320px; height:240px;"></div>
 		<div id="blocker">
@@ -87,30 +88,6 @@
 			var min;
 			var max;
 
-			function createGround(scene) {
-				const groundGeometry = new THREE.PlaneGeometry(1000, 1000, 500, 500);
-
-				let map = new THREE.TextureLoader()
-				.setPath("./heightmap")
-				.load("heightmap.png");
-
-				map.wrapS = map.mapT = THREE.RepeatWrapping;
-				map.repeat.set(20, 20);
-
-				const groundMaterial = new THREE.MeshStandardMaterial({
-					color: 0x000000,
-					wireframe: true,
-					displacementMap: map,
-					displacementScale: 0.1
-				})
-
-				groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-				scene.add(groundMesh);
-				groundMesh.rotation.x = -Math.PI / 2;
-				groundMesh.position.y = -0.5;
-			}
-
-
 			function init() {
 				scene = new THREE.Scene();
 
@@ -136,9 +113,9 @@
 
 				
 
-				createGround(scene);
+				createTerrain(scene);
 				 
-				let sun = new THREE.DirectionalLight(0xFFFFFF, 50.0);
+				let sun = new THREE.DirectionalLight(0xFFFFFF, 1);
 				sun.position.set(2,10,1);
 				sun.target.position.set(0,0,0);
 
