@@ -14,7 +14,7 @@ scene.background = new THREE.Color( 0x8fd9d9 );
 
 //Plane
 var dirtTexture = new THREE.TextureLoader().load("textures/Dirt1.jpg");
-var geometry = new THREE.PlaneGeometry(30000,30000);
+var geometry = new THREE.PlaneGeometry(60000,60000);
 var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
 material.map = dirtTexture;
 material.map.wrapS = THREE.RepeatWrapping;
@@ -63,7 +63,7 @@ function onWindowResize() {
 }
 
 function animate() {
-   skybox.rotation.x += 0.005;
+   //skybox.rotation.x += 0.005;
 
    requestAnimationFrame( animate );
    render();
