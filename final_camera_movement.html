@@ -85,27 +85,125 @@
 			var min;
 			var max;
 
-			function createGround(scene) {
-				const groundGeometry = new THREE.PlaneGeometry(1000, 1000, 500, 500);
+			function createTerrain(scene) {
+				createAshphalt(scene);
+				createMountains(scene);
+				createRocks(scene);
+			}
 
-				let map = new THREE.TextureLoader()
-				.setPath("./heightmap")
-				.load("heightmap.png");
+			function createRocks(scene) {
+				const rockGeometry = new THREE.PlaneGeometry(100, 100, 500, 500);
 
-				map.wrapS = map.mapT = THREE.RepeatWrapping;
-				map.repeat.set(20, 20);
+				let rockDisplacementMap = new THREE.TextureLoader()
+				.load("heightmap/rock-displacement.png")
 
-				const groundMaterial = new THREE.MeshStandardMaterial({
-					color: 0x000000,
-					wireframe: true,
-					displacementMap: map,
-					displacementScale: 0.1
+				let rockTexture = new THREE.TextureLoader()
+				.load("terrain/rock-texture.jpg")
+
+				const rockMaterial = new THREE.MeshStandardMaterial({
+					color: 'grey',
+					map: rockTexture,
+					displacementMap: rockDisplacementMap,
+					displacementScale: 1
 				})
 
-				groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-				scene.add(groundMesh);
-				groundMesh.rotation.x = -Math.PI / 2;
-				groundMesh.position.y = -0.5;
+				const rockMesh = new THREE.Mesh(rockGeometry, rockMaterial);
+				rockMesh.rotation.x = -Math.PI / 2;
+				rockMesh.position.x = 500;
+				scene.add(rockMesh);
+			}
+
+			function createMountains(scene) {
+				const mountainGeometry = new THREE.PlaneGeometry(900,900, 500, 500);
+				const largerMountainGeometry = new THREE.PlaneGeometry(1200, 900, 500, 500)
+
+				let mountainDisplacementMap = new THREE.TextureLoader()
+				.load("heightmap/heightmap.png");
+
+				let mountainTexture = new THREE.TextureLoader()
+				.load("terrain/rock-texture.jpg");
+
+				const mountainMaterial = new THREE.MeshStandardMaterial({
+					color: 'grey',
+					map: mountainTexture,
+					displacementMap: mountainDisplacementMap,
+					displacementScale: 70,
+				})
+
+				scene.add(createMountain(mountainGeometry, mountainMaterial, 1000, 0));
+				scene.add(createMountain(mountainGeometry, mountainMaterial, -1000, 0));
+				scene.add(createMountain(mountainGeometry, mountainMaterial, 0, 1000));
+				scene.add(createMountain(mountainGeometry, mountainMaterial, 0, -1000));
+				scene.add(createMountain(largerMountainGeometry, mountainMaterial, 1000, -1000));
+				scene.add(createMountain(largerMountainGeometry, mountainMaterial, 1150, -800));
+				scene.add(createMountain(largerMountainGeometry, mountainMaterial, -1000, 1000));
+				scene.add(createMountain(largerMountainGeometry, mountainMaterial, -1150, 800));
+			}
+
+			function createMountain(mountainGeometry, mountainMaterial, x, z) {
+				const mountainMesh = new THREE.Mesh(mountainGeometry, mountainMaterial);
+				mountainMesh.rotation.x = -Math.PI / 2;
+				mountainMesh.position.x = x;
+				mountainMesh.position.z = z;
+				return mountainMesh;
+			}
+
+			function createAshphalt(scene) {
+				const cityGeometry = new THREE.PlaneGeometry(100, 100, 500, 500);
+
+				let asphaltDisplacementMap = new THREE.TextureLoader()
+				.load("heightmap/asphalt-displacement.png");
+
+				let asphaltTexture = new THREE.TextureLoader()
+				.load("terrain/asphalt-texture.jpg");
+
+				const asphaltMaterial = new THREE.MeshStandardMaterial({
+					color: 'grey',
+					map: asphaltTexture,
+					displacementMap: asphaltDisplacementMap,
+					displacementScale: 1,
+				})
+
+				for (var i = 0; i < 5; ++i) {
+					for (var j = 0; j < 5; ++j) {
+						const ashphaltMeshZ = createAshphaltMesh(cityGeometry, asphaltMaterial);
+						ashphaltMeshZ.position.z = j * 100;
+						ashphaltMeshZ.position.x = i * 100;
+						scene.add(ashphaltMeshZ);
+
+						const ashphaltMeshZNeg = createAshphaltMesh(cityGeometry, asphaltMaterial);
+						ashphaltMeshZNeg.position.z = j * -100;
+						ashphaltMeshZNeg.position.x = i * 100;
+						scene.add(ashphaltMeshZNeg);
+
+						const ashphaltMeshZNegX = createAshphaltMesh(cityGeometry, asphaltMaterial);
+						ashphaltMeshZNegX.position.z = j * 100;
+						ashphaltMeshZNegX.position.x = i * -100;
+						scene.add(ashphaltMeshZNegX);
+
+						const ashphaltMeshZNegXNeg = createAshphaltMesh(cityGeometry, asphaltMaterial);
+						ashphaltMeshZNegXNeg.position.z = j * -100;
+						ashphaltMeshZNegXNeg.position.x = i * -100;
+						scene.add(ashphaltMeshZNegXNeg);
+					}
+					const ashphaltMeshX = createAshphaltMesh(cityGeometry, asphaltMaterial);
+					ashphaltMeshX.position.x = i * 100;
+					scene.add(ashphaltMeshX);
+
+					const ashphaltMeshXNeg = createAshphaltMesh(cityGeometry, asphaltMaterial);
+					ashphaltMeshXNeg.position.x = i * -100;
+					scene.add(ashphaltMeshXNeg);
+				}
+			}
+
+			function createAshphaltMesh(cityGeometry, asphaltMaterial) {
+				ashphaltMesh = new THREE.Mesh(cityGeometry, asphaltMaterial);
+				ashphaltMesh.rotation.x = -Math.PI / 2;
+				return ashphaltMesh;
+			}
+
+			function generateBuildings(scene) {
+				
 			}
 
 
@@ -120,9 +218,9 @@
 
 				scene = new THREE.Scene();
 
-				createGround(scene);
+				createTerrain(scene);
 				 
-				let sun = new THREE.DirectionalLight(0xFFFFFF, 50.0);
+				let sun = new THREE.DirectionalLight(0xFFFFFF, 1);
 				sun.position.set(2,10,1);
 				sun.target.position.set(0,0,0);
 
