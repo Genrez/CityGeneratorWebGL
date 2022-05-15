@@ -128,34 +128,48 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement );
 window.addEventListener( 'resize', onWindowResize, false );
 
-//Plane
-/*var dirtTexture = new THREE.TextureLoader().load("textures/Dirt1.jpg");
-var geometry = new THREE.PlaneGeometry(60000,60000);
-var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
-material.map = dirtTexture;
-material.map.wrapS = THREE.RepeatWrapping;
-material.map.wrapT = THREE.RepeatWrapping;
-material.map.repeat.set(10,10);
-var plane = new THREE.Mesh( geometry, material );
-plane.material.side = THREE.DoubleSide;
-plane.rotation.set(Math.PI / 2, 0, 0);
-plane.receiveShadow = true;
-plane.castShadow = false;
-scene.add( plane );
-*/
-//PointLight
-var sunY = 300;
-var sunX = 2;
+//PointLights in each direction
+var sunY = 5;
+var sunX = 1;
 var sunZ = 1;
-var sunIntensity = 1;
+var sunIntensity = 0.5;
 let sun = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
 sun.position.set(sunX,sunY,sunZ);
 sun.target.position.set(0,0,0);
 scene.add(sun);
 scene.add(sun.target);
 
-//const helper = new THREE.DirectionalLightHelper( sun, 5 );
-//scene.add( helper );
+var sunY = 5;
+var sunX = -1;
+var sunZ = -1;
+var sunIntensity = 0.5;
+let sun2 = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
+sun2.position.set(sunX,sunY,sunZ);
+sun2.target.position.set(0,0,0);
+scene.add(sun2);
+scene.add(sun2.target);
+
+var sunY = 5;
+var sunX = 1;
+var sunZ = -1;
+var sunIntensity = 0.5;
+let sun3 = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
+sun3.position.set(sunX,sunY,sunZ);
+sun3.target.position.set(0,0,0);
+scene.add(sun3);
+scene.add(sun3.target);
+
+var sunY = 5;
+var sunX = -1;
+var sunZ = 1;
+var sunIntensity = 0.5;
+let sun4 = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
+sun4.position.set(sunX,sunY,sunZ);
+sun4.target.position.set(0,0,0);
+scene.add(sun4);
+scene.add(sun4.target);
+
+
 
 //Skybox
 function createPathStrings(filename) {
@@ -199,7 +213,7 @@ function onWindowResize() {
 }
 
 function animate() {
-   skybox.rotation.y += 0.01;
+   skybox.rotation.y += 0.0001;
    //sun.rotation.z += 0.01;
    requestAnimationFrame( animate );
    render();

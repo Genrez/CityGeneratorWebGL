@@ -81,7 +81,7 @@ function generateBuilding(i, j) {
         mesh.rotation.z = Math.floor(Math.random() * 360);
         
         mesh.rotation.x = - Math.PI / 2;
-        mesh.scale.set(5, 5, Math.floor(Math.random() * 20)+1);
+        mesh.scale.set(5, 5, Math.floor(Math.random() * 20)+10);
        // mesh.scale.y = Math.random() * 6 + 1;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -90,12 +90,11 @@ function generateBuilding(i, j) {
     });
 }
 
+//Get random colour thats not dark
 function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
+    let color = "#";
+    for (let i = 0; i < 3; i++)
+        color += ("0" + Math.floor(((1 + Math.random()) * Math.pow(16, 2)) / 2).toString(16)).slice(-2);
     return color;
   }
 
