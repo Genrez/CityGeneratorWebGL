@@ -23,6 +23,7 @@ loader.load( './models/dolphins.ply', function ( geometry ) {
 
 
 function generateBuilding(number) {
+    var mesh = null;
     loader.load('models/Building' + number + '.ply', function (geometry) {
         geometry.computeVertexNormals();
         geometry.computeBoundingBox();
@@ -46,7 +47,7 @@ function generateBuilding(number) {
  //       generateBuilding(Math.random(1,5), Math.random(0, 1000), Math.random(0, 1000));
  //   }
 //}
-var model = 5;
+var model = Math.floor(Math.random() * 5) + 1;
 generateBuilding(model);
 
 
