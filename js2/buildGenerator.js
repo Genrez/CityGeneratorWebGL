@@ -79,10 +79,9 @@ function generateBuilding(i, j) {
         
         //mesh.rotation.y = Math.random() * Math.PI / 2;
         mesh.rotation.z = Math.floor(Math.random() * 360);
-
+        
         mesh.rotation.x = - Math.PI / 2;
-        mesh.scale.multiplyScalar( 4 );
-        mesh.scale.set.y = Math.random() * 6 + 3;
+        mesh.scale.set(5, 5, Math.floor(Math.random() * 20)+1);
        // mesh.scale.y = Math.random() * 6 + 1;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
