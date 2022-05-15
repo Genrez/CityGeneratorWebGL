@@ -21,17 +21,56 @@ loader.load( './models/dolphins.ply', function ( geometry ) {
 
 } );
 
+function generateCity() {
+    const planeMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(900, 900),
+        new THREE.MeshBasicMaterial({
+            side: THREE.DoubleSide,
+            visible: false
+        })
+    )
 
-function generateBuilding(number) {
-    var mesh = null;
-    loader.load('models/Building' + number + '.ply', function (geometry) {
+    planeMesh.rotateX(-Math.PI / 2);
+    planeMesh.position.y = 1;
+    scene.add(planeMesh);
+
+    for (var i = 72; i < 432; i += 72) {
+        for (var j = 72; j < 432; j += 72) {
+            generateBuilding(i, j);
+        }
+    }
+
+    for (var i = 72; i < 432; i += 72) {
+        for (var j = 72; j > -432; j -= 72) {
+            generateBuilding(i, j);
+        }
+    }
+
+    for (var i = 72; i > -432; i -= 72) {
+        for (var j = 72; j > -432; j -= 72) {
+            generateBuilding(i, j);
+        }
+    }
+
+    for (var i = 72; i > -432; i -= 72) {
+        for (var j = 72; j < 432; j += 72) {
+            generateBuilding(i, j);
+        }
+    }
+}
+
+
+function generateBuilding(i, j) {
+    var model = Math.floor(Math.random() * 5) + 1;
+    loader.load('models/Building' + model + '.ply', function (geometry) {
         geometry.computeVertexNormals();
         geometry.computeBoundingBox();
 
         const material = new THREE.MeshStandardMaterial( { color: 0x0055ff, flatShading: true } );
         const mesh = new THREE.Mesh( geometry, material );
         
-        mesh.position.x = 40;
+        mesh.position.x = i;
+        mesh.position.z = j;
 
         mesh.rotation.x = - Math.PI / 2;
         mesh.scale.multiplyScalar( 4 );
@@ -42,13 +81,7 @@ function generateBuilding(number) {
     });
 }
 
-//function generateBase() {
-//    for (var i = 0; i < numberOfBuildings; i++) {
- //       generateBuilding(Math.random(1,5), Math.random(0, 1000), Math.random(0, 1000));
- //   }
-//}
-var model = Math.floor(Math.random() * 5) + 1;
-generateBuilding(model);
+generateCity()
 
 
 
