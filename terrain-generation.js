@@ -1,7 +1,3 @@
-function createTerrain(scene) {
-    createAshphalt(scene);
-    createMountains(scene);
-}
 createAshphalt();
 createMountains();
 

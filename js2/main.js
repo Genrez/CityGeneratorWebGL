@@ -43,7 +43,6 @@
 				mapCamera.lookAt( new THREE.Vector3(0,-1,0) );
 				scene.add(mapCamera);
 
-				
 
 				controls = new THREE.PointerLockControls( camera );
 
@@ -225,7 +224,7 @@ function animate() {
      if (controls.getObject().position.y > 11 ) {
 		velocity.y -= 1 * 500.0 * delta;
      }
-	console.log(controls.getObject().position.y);
+	// console.log(controls.getObject().position.y);
      prevTime = time;
 
   }
