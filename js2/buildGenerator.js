@@ -1,7 +1,7 @@
-var numberOfBuildings = 100;
+var numberOfBuildings = 20;
+var loader = new THREE.PLYLoader();
 
 function generateBuilding(number, x, z) {
-    var loader = new THREE.PLYLoader();
     var mesh = null;
     loader.load('models/Building' + number + '.ply', function (geometry) {
         var material = new THREE.MeshPhongMaterial();
@@ -28,6 +28,7 @@ function generateBase() {
 }
 
 generateBase();
+
 
 
 

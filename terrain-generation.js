@@ -41,7 +41,7 @@ function createMountain(mountainGeometry, mountainMaterial, x, z) {
 }
 
 function createAshphalt() {
-    const cityGeometry = new THREE.PlaneGeometry(100, 100, 500, 500);
+    const cityGeometry = new THREE.PlaneGeometry(900, 900, 500, 500);
 
     let asphaltDisplacementMap = new THREE.TextureLoader()
     .load("heightmap/asphalt-displacement.png");
@@ -56,8 +56,8 @@ function createAshphalt() {
         displacementScale: 1,
     })
 
-    for (var i = 0; i < 5; ++i) {
-        for (var j = 0; j < 5; ++j) {
+    for (var i = 0; i < 1; ++i) {
+        for (var j = 0; j < 1; ++j) {
             const ashphaltMeshZ = createAshphaltMesh(cityGeometry, asphaltMaterial);
             ashphaltMeshZ.position.z = j * 100;
             ashphaltMeshZ.position.x = i * 100;
