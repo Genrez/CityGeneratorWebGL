@@ -5,6 +5,11 @@ var gui = new dat.GUI({
 var params = {
     skyboxRotation: 0,
 
+    sunX: 2,
+    sunY: 300,
+    sunZ: 2,
+    sunIntensity: 1,
+
     sky1: function () { 
         skybox.material = materialArray;
     },
@@ -24,8 +29,18 @@ var cameraSettings = gui.addFolder('Camera Settings');
 var generationSettings = gui.addFolder('Generation Settings');
 
 var lightSettings = gui.addFolder('Light Settings');
+//change sun y position
+lightSettings.add(params, 'sunY', 0, 1000).onChange(function (value) {
+    sun.position.y = value;
+});
+//change sun intensity from 0 to 1
+lightSettings.add(params, 'sunIntensity', 0, 1).onChange(function (value) {
+    sun.intensity = value;
+});
+
 
 var skySettings = gui.addFolder('Sky Settings');
+
 
 var skyRotationControl = skySettings.add(params, 'skyboxRotation', 0, 10, 0.1).listen();;
 skyRotationControl.name("Sky Rotation Speed");

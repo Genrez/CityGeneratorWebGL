@@ -144,11 +144,18 @@ plane.castShadow = false;
 scene.add( plane );
 */
 //PointLight
-let sun = new THREE.DirectionalLight(0xFFFFFF, 1);
-sun.position.set(2,10,1);
+var sunY = 300;
+var sunX = 2;
+var sunZ = 1;
+var sunIntensity = 1;
+let sun = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
+sun.position.set(sunX,sunY,sunZ);
 sun.target.position.set(0,0,0);
 scene.add(sun);
 scene.add(sun.target);
+
+//const helper = new THREE.DirectionalLightHelper( sun, 5 );
+//scene.add( helper );
 
 //Skybox
 function createPathStrings(filename) {
@@ -193,6 +200,7 @@ function onWindowResize() {
 
 function animate() {
    skybox.rotation.y += 0.01;
+   //sun.rotation.z += 0.01;
    requestAnimationFrame( animate );
    render();
 

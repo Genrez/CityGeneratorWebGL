@@ -42,6 +42,7 @@ function generateCity() {
         }
     }
 
+    
     for (var i = 72; i < 432; i += 72) {
         for (var j = 72; j > -432; j -= 72) {
             generateBuilding(i, j);
@@ -59,6 +60,7 @@ function generateCity() {
             generateBuilding(i, j);
         }
     }
+    
 }
 
 
