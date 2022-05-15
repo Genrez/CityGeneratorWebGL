@@ -175,9 +175,12 @@ const skyboxImage = 'skybox';
 const skyboxImage2 = 'clouds';
 const skyboxImage3 = 'clouds2';
 const skyboxImage4 = 'interstellar';
-const materialArray = createMaterialArray(skyboxImage2);
+const materialArray = createMaterialArray(skyboxImage);
+const materialArray2 = createMaterialArray(skyboxImage2);
+const materialArray3 = createMaterialArray(skyboxImage3);
+const materialArray4 = createMaterialArray(skyboxImage4);
 skyboxGeo = new THREE.BoxGeometry(60000, 60000, 60000);
-skybox = new THREE.Mesh(skyboxGeo, materialArray);
+skybox = new THREE.Mesh(skyboxGeo, materialArray2);
 scene.add(skybox);
 
 //controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -188,9 +191,8 @@ function onWindowResize() {
    renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-
 function animate() {
-   //skybox.rotation.x += 0.005;
+   skybox.rotation.y += 0.01;
    requestAnimationFrame( animate );
    render();
 

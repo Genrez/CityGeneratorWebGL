@@ -1,6 +1,7 @@
 var numberOfBuildings = 20;
 var loader = new THREE.PLYLoader();
 
+/*
 loader.load( './models/dolphins.ply', function ( geometry ) {
     geometry.computeVertexNormals();
     geometry.computeBoundingBox();
@@ -20,6 +21,7 @@ loader.load( './models/dolphins.ply', function ( geometry ) {
     scene.add( mesh );
 
 } );
+*/
 
 function generateCity() {
     const planeMesh = new THREE.Mesh(
@@ -72,11 +74,14 @@ function generateBuilding(i, j) {
         
         mesh.position.x = i;
         mesh.position.z = j;
-
-        //mesh.rotation.y = Math.random() * Math.PI / 2;
         
+        //mesh.rotation.y = Math.random() * Math.PI / 2;
+        mesh.rotation.z = Math.floor(Math.random() * 360);
+
         mesh.rotation.x = - Math.PI / 2;
-        mesh.scale.multiplyScalar( 6 );
+        mesh.scale.multiplyScalar( 4 );
+        mesh.scale.set.y = Math.random() * 6 + 3;
+       // mesh.scale.y = Math.random() * 6 + 1;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
 

@@ -3,7 +3,20 @@ var gui = new dat.GUI({
 });
  
 var params = {
-    camera_rotation: 0,
+    skyboxRotation: 0,
+
+    sky1: function () { 
+        skybox.material = materialArray;
+    },
+    sky2: function () {
+        skybox.material = materialArray2;
+    },
+    sky3: function () {
+        skybox.material = materialArray3;
+    },
+    sky4: function () {
+        skybox.material = materialArray4;
+    },
 }
 
 var cameraSettings = gui.addFolder('Camera Settings');
@@ -13,6 +26,24 @@ var generationSettings = gui.addFolder('Generation Settings');
 var lightSettings = gui.addFolder('Light Settings');
 
 var skySettings = gui.addFolder('Sky Settings');
+
+var skyRotationControl = skySettings.add(params, 'skyboxRotation', 0, 10, 0.1).listen();;
+skyRotationControl.name("Sky Rotation Speed");
+skyRotationControl.onChange(function (val) {
+    params.skyboxRotation = val;
+});
+
+var skyB1 = skySettings.add(params, 'sky1');
+skyB1.name("1");
+
+var skyB2 = skySettings.add(params, 'sky2');
+skyB2.name("2");
+
+var skyB3 = skySettings.add(params, 'sky3');
+skyB3.name("3");
+
+var skyB4 = skySettings.add(params, 'sky4');
+skyB4.name("4");
 
 
 
