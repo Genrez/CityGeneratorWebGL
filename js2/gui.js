@@ -50,7 +50,7 @@ lightSettings.add(params, 'sunIntensity', 0, 10).onChange(function (value) {
 
 var skySettings = gui.addFolder('Sky Settings');
 //change skybox rotation speed from 0.0001 to 0.01
-skySettings.add(params, 'skyBoxRotation', 0.01, 0.10).onChange(function (value) {
+skySettings.add(params, 'skyBoxRotation', 0.001, 0.10).onChange(function (value) {
     skyBoxRotation = value;
 });
 
