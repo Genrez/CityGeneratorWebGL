@@ -44,19 +44,19 @@ function generateCity() {
 
     
     for (var i = 72; i < 432; i += 72) {
+        for (var j = 0; j > -432; j -= 72) {
+            generateBuilding(i, j);
+        }
+    }
+    
+    for (var i = 0; i > -432; i -= 72) {
         for (var j = 72; j > -432; j -= 72) {
             generateBuilding(i, j);
         }
     }
-
-    for (var i = 72; i > -432; i -= 72) {
-        for (var j = 72; j > -432; j -= 72) {
-            generateBuilding(i, j);
-        }
-    }
-
-    for (var i = 72; i > -432; i -= 72) {
-        for (var j = 72; j < 432; j += 72) {
+   
+    for (var i = 144; i > -432; i -= 72) {
+        for (var j = 144; j < 432; j += 72) {
             generateBuilding(i, j);
         }
     }
