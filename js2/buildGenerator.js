@@ -24,17 +24,6 @@ loader.load( './models/dolphins.ply', function ( geometry ) {
 */
 
 function generateCity() {
-    const planeMesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(900, 900),
-        new THREE.MeshBasicMaterial({
-            side: THREE.DoubleSide,
-            visible: false
-        })
-    )
-
-    planeMesh.rotateX(-Math.PI / 2);
-    planeMesh.position.y = 1;
-    scene.add(planeMesh);
 
     for (var i = 72; i < 432; i += 72) {
         for (var j = 72; j < 432; j += 72) {
