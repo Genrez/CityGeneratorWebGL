@@ -30,6 +30,8 @@ var generationSettings = gui.addFolder('Generation Settings');
 
 var lightSettings = gui.addFolder('Light Settings');
 
+var planeSettings = gui.addFolder('Plane Settings');
+
 lightSettings.add(params, 'sunY', 0, 1000).onChange(function (value) {
     sun.position.y = value;
 });
