@@ -6,7 +6,7 @@ var params = {
     skyBoxRotation: 0.001,
 
     sunX: 2,
-    sunY: 300,
+    sunY: 600,
     sunZ: 2,
     sunIntensity: 1,
 

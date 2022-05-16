@@ -1,5 +1,8 @@
 
-         	var camera,scene,renderer, controls;
+         	
+			
+			
+			var camera,scene,renderer, controls;
 			var mapCamera, mapWidth = 240, mapHeight = 160;
 
 
@@ -133,8 +136,12 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement );
 window.addEventListener( 'resize', onWindowResize, false );
 
-//PointLights in each direction
-var sunY = 5;
+//create lava material for sphere, use lava image
+var lavaMaterial = new THREE.MeshBasicMaterial({
+	map: THREE.ImageUtils.loadTexture("./img/lava.jpg"),
+});
+												
+var sunY = 600;
 var sunX = 1;
 var sunZ = 1;
 var sunIntensity = 2;
@@ -143,6 +150,17 @@ sun.position.set(sunX,sunY,sunZ);
 sun.target.position.set(0,0,0);
 scene.add(sun);
 scene.add(sun.target);
+
+var ballGeometry = new THREE.SphereGeometry( 60, 64, 64 );
+	var ball = new THREE.Mesh(	ballGeometry, lavaMaterial );
+	ball.position.set(sunX,sunY,sunZ);
+	ball.castShadow = false;
+	ball.receiveShadow = false;
+	sun.add( ball );
+
+
+const helper = new THREE.DirectionalLightHelper( sun, 5 );
+scene.add( helper );
 
 //Skybox
 function createPathStrings(filename) {
@@ -188,7 +206,6 @@ function onWindowResize() {
 var skyBoxRotation = 0.001;
 function animate() {
    skybox.rotation.y += skyBoxRotation;
-   sun.rotation.z += 0.01;
    requestAnimationFrame( animate );
    render();
 
