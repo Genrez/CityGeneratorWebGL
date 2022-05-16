@@ -27,10 +27,9 @@ var params = {
 var cameraSettings = gui.addFolder('Camera Settings');
 
 var generationSettings = gui.addFolder('Generation Settings');
+//create a button called regenerate that refreshes the scene
 
 var lightSettings = gui.addFolder('Light Settings');
-
-var planeSettings = gui.addFolder('Plane Settings');
 
 lightSettings.add(params, 'sunY', 0, 1000).onChange(function (value) {
     sun.position.y = value;
@@ -66,6 +65,8 @@ skyB3.name("3");
 
 var skyB4 = skySettings.add(params, 'sky4');
 skyB4.name("4");
+
+var planeSettings = gui.addFolder('Plane Settings');
 
 
 

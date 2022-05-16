@@ -45,8 +45,9 @@
 
 
 				controls = new THREE.PointerLockControls( camera );
-
+ 
         		controls.enabled = true;
+			
 				scene.add( controls.getObject() );
 
 				var onKeyDown = function ( event ) {
@@ -121,6 +122,10 @@
 
 document.addEventListener( 'keydown', onKeyDown, false );
 document.addEventListener( 'keyup', onKeyUp, false );
+document.addEventListener('click', function() {
+	controls.lock();
+}, false);
+
 
 var renderer = new THREE.WebGLRenderer({ antialias: true } ); 
 renderer.setPixelRatio( window.devicePixelRatio );
