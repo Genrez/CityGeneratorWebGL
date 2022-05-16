@@ -71,7 +71,9 @@ function generateBuilding(i, j) {
         geometry.computeVertexNormals();
         geometry.computeBoundingBox();
 
-        const material = new THREE.MeshStandardMaterial( { color: getRandomColor(), flatShading: true } );
+        //const material = new THREE.MeshStandardMaterial( { color: getRandomColor(), flatShading: true } );
+       
+        const material = new THREE.MeshLambertMaterial( { color: getRandomColor(), flatShading: false } );
         const mesh = new THREE.Mesh( geometry, material );
         
         mesh.position.x = i;
@@ -85,7 +87,8 @@ function generateBuilding(i, j) {
        // mesh.scale.y = Math.random() * 6 + 1;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
-
+        
+        mesh.name = "loaded_mesh";
         scene.add(mesh);
     });
 }

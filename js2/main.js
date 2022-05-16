@@ -132,44 +132,12 @@ window.addEventListener( 'resize', onWindowResize, false );
 var sunY = 5;
 var sunX = 1;
 var sunZ = 1;
-var sunIntensity = 0.5;
+var sunIntensity = 2;
 let sun = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
 sun.position.set(sunX,sunY,sunZ);
 sun.target.position.set(0,0,0);
 scene.add(sun);
 scene.add(sun.target);
-
-var sunY = 5;
-var sunX = -1;
-var sunZ = -1;
-var sunIntensity = 0.5;
-let sun2 = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
-sun2.position.set(sunX,sunY,sunZ);
-sun2.target.position.set(0,0,0);
-scene.add(sun2);
-scene.add(sun2.target);
-
-var sunY = 5;
-var sunX = 1;
-var sunZ = -1;
-var sunIntensity = 0.5;
-let sun3 = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
-sun3.position.set(sunX,sunY,sunZ);
-sun3.target.position.set(0,0,0);
-scene.add(sun3);
-scene.add(sun3.target);
-
-var sunY = 5;
-var sunX = -1;
-var sunZ = 1;
-var sunIntensity = 0.5;
-let sun4 = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
-sun4.position.set(sunX,sunY,sunZ);
-sun4.target.position.set(0,0,0);
-scene.add(sun4);
-scene.add(sun4.target);
-
-
 
 //Skybox
 function createPathStrings(filename) {
@@ -212,9 +180,10 @@ function onWindowResize() {
    renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
+var skyBoxRotation = 0.01;
 function animate() {
-   skybox.rotation.y += 0.0001;
-   //sun.rotation.z += 0.01;
+   skybox.rotation.y += skyBoxRotation;
+   sun.rotation.z += 0.01;
    requestAnimationFrame( animate );
    render();
 

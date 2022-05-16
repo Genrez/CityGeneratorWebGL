@@ -3,7 +3,7 @@ var gui = new dat.GUI({
 });
  
 var params = {
-    skyboxRotation: 0,
+    skyBoxRotation: 0.01,
 
     sunX: 2,
     sunY: 300,
@@ -34,18 +34,15 @@ lightSettings.add(params, 'sunY', 0, 1000).onChange(function (value) {
     sun.position.y = value;
 });
 //change sun intensity from 0 to 1
-lightSettings.add(params, 'sunIntensity', 0, 1).onChange(function (value) {
+lightSettings.add(params, 'sunIntensity', 0, 10).onChange(function (value) {
     sun.intensity = value;
 });
 
 
 var skySettings = gui.addFolder('Sky Settings');
-
-
-var skyRotationControl = skySettings.add(params, 'skyboxRotation', 0, 10, 0.1).listen();;
-skyRotationControl.name("Sky Rotation Speed");
-skyRotationControl.onChange(function (val) {
-    params.skyboxRotation = val;
+//change skybox rotation speed from 0.0001 to 0.01
+skySettings.add(params, 'skyBoxRotation', 0.01, 0.10).onChange(function (value) {
+    skyBoxRotation = value;
 });
 
 var skyB1 = skySettings.add(params, 'sky1');
