@@ -29,11 +29,19 @@ var cameraSettings = gui.addFolder('Camera Settings');
 var generationSettings = gui.addFolder('Generation Settings');
 
 var lightSettings = gui.addFolder('Light Settings');
-//change sun y position
+
 lightSettings.add(params, 'sunY', 0, 1000).onChange(function (value) {
     sun.position.y = value;
 });
-//change sun intensity from 0 to 1
+
+lightSettings.add(params, 'sunZ', 0, 100).onChange(function (value) {
+    sun.position.z = value;
+});
+
+lightSettings.add(params, 'sunX', 0, 100).onChange(function (value) {
+    sun.position.x = value;
+});
+
 lightSettings.add(params, 'sunIntensity', 0, 10).onChange(function (value) {
     sun.intensity = value;
 });
