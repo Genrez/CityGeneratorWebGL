@@ -239,7 +239,37 @@ function animate() {
      if (controls.getObject().position.y > 11 ) {
 		velocity.y -= 1 * 500.0 * delta;
      }
-	// console.log(controls.getObject().position.y);
+
+	 //Collision detection for plane edges
+				if (controls.getObject().position.x < -450) {
+					if ( moveForward || moveBackward ) velocity.z = 100;
+					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 100;
+					if ( moveLeft || moveRight ) velocity.x = 100;
+					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 100;
+				}
+
+				if (controls.getObject().position.x > 450) {
+					if ( moveForward || moveBackward ) velocity.z = -100;
+					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -100;
+					if ( moveLeft || moveRight ) velocity.x = -100;
+					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -100;
+				}
+
+				if (controls.getObject().position.z < -450) {
+					if ( moveForward || moveBackward ) velocity.z = 100;
+					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = 100;
+					if ( moveLeft || moveRight ) velocity.x = 100;
+					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = 100;
+				}
+
+				if (controls.getObject().position.z > 450) {
+					if ( moveForward || moveBackward ) velocity.z = -100;
+					if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z = -100;
+					if ( moveLeft || moveRight ) velocity.x = -100;
+					if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x = -100;
+				}
+	//  console.log(controls.getObject().position.x);
+	//  console.log(controls.getObject().position.z);
      prevTime = time;
 
   }
