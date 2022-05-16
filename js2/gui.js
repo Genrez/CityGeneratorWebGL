@@ -3,7 +3,7 @@ var gui = new dat.GUI({
 });
  
 var params = {
-    skyBoxRotation: 0.01,
+    skyBoxRotation: 0.001,
 
     sunX: 2,
     sunY: 300,

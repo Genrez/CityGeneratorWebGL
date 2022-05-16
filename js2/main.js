@@ -185,7 +185,7 @@ function onWindowResize() {
    renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-var skyBoxRotation = 0.01;
+var skyBoxRotation = 0.001;
 function animate() {
    skybox.rotation.y += skyBoxRotation;
    sun.rotation.z += 0.01;
