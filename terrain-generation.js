@@ -37,7 +37,7 @@ function createMountain(mountainGeometry, mountainMaterial, x, z) {
 }
 
 function createAshphalt() {
-    const cityGeometry = new THREE.PlaneGeometry(900, 900, 500, 500);
+    const cityGeometry = new THREE.PlaneGeometry(2000, 2000, 500, 500);
 
     let asphaltDisplacementMap = new THREE.TextureLoader()
     .load("heightmap/asphalt-displacement.png");
@@ -52,36 +52,10 @@ function createAshphalt() {
         displacementScale: 1,
     })
 
-    for (var i = 0; i < 1; ++i) {
-        for (var j = 0; j < 1; ++j) {
-            const ashphaltMeshZ = createAshphaltMesh(cityGeometry, asphaltMaterial);
-            ashphaltMeshZ.position.z = j * 100;
-            ashphaltMeshZ.position.x = i * 100;
-            scene.add(ashphaltMeshZ);
-
-            const ashphaltMeshZNeg = createAshphaltMesh(cityGeometry, asphaltMaterial);
-            ashphaltMeshZNeg.position.z = j * -100;
-            ashphaltMeshZNeg.position.x = i * 100;
-            scene.add(ashphaltMeshZNeg);
-
-            const ashphaltMeshZNegX = createAshphaltMesh(cityGeometry, asphaltMaterial);
-            ashphaltMeshZNegX.position.z = j * 100;
-            ashphaltMeshZNegX.position.x = i * -100;
-            scene.add(ashphaltMeshZNegX);
-
-            const ashphaltMeshZNegXNeg = createAshphaltMesh(cityGeometry, asphaltMaterial);
-            ashphaltMeshZNegXNeg.position.z = j * -100;
-            ashphaltMeshZNegXNeg.position.x = i * -100;
-            scene.add(ashphaltMeshZNegXNeg);
-        }
-        const ashphaltMeshX = createAshphaltMesh(cityGeometry, asphaltMaterial);
-        ashphaltMeshX.position.x = i * 100;
-        scene.add(ashphaltMeshX);
-
-        const ashphaltMeshXNeg = createAshphaltMesh(cityGeometry, asphaltMaterial);
-        ashphaltMeshXNeg.position.x = i * -100;
-        scene.add(ashphaltMeshXNeg);
-    }
+    const ashphaltMeshZ = createAshphaltMesh(cityGeometry, asphaltMaterial);
+    ashphaltMeshZ.position.z = 0;
+    ashphaltMeshZ.position.x = 0
+    scene.add(ashphaltMeshZ);
 }
 
 function createAshphaltMesh(cityGeometry, asphaltMaterial) {
