@@ -1,7 +1,68 @@
+const _sunVS = `
+uniform sampler2D noiseTexture;
+uniform float noiseScale;
 
+uniform sampler2D bumpTexture;
+uniform float bumpSpeed;
+uniform float bumpScale;
+
+uniform float time;
+
+varying vec2 vUv;
+
+void main() 
+{ 
+    vUv = uv;
+	
+	vec2 uvTimeShift = vUv + vec2( 1.1, 1.9 ) * time * bumpSpeed;
+	vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift );
+	vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.g );
+	vec4 bumpData = texture2D( bumpTexture, uvTimeShift );
+	float displacement = ( vUv.y > 0.999 || vUv.y < 0.001 ) ? 
+		bumpScale * (0.3 + 0.02 * sin(time)) :  
+		bumpScale * bumpData.r;
+    vec3 newPosition = position + normal * displacement;
+	
+	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+}
+`
+
+const _sunFS = `
+uniform sampler2D baseTexture;
+uniform float baseSpeed;
+uniform float repeatS;
+uniform float repeatT;
+
+uniform sampler2D noiseTexture;
+uniform float noiseScale;
+
+uniform sampler2D blendTexture;
+uniform float blendSpeed;
+uniform float blendOffset;
+
+uniform float time;
+uniform float alpha;
+
+varying vec2 vUv;
+
+void main() 
+{
+	vec2 uvTimeShift = vUv + vec2( -0.7, 1.5 ) * time * baseSpeed;	
+	vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift );
+	vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.b );
+	vec4 baseColor = texture2D( baseTexture, uvNoiseTimeShift * vec2(repeatS, repeatT) );
+
+	vec2 uvTimeShift2 = vUv + vec2( 1.3, -1.7 ) * time * blendSpeed;	
+	vec4 noiseGeneratorTimeShift2 = texture2D( noiseTexture, uvTimeShift2 );
+	vec2 uvNoiseTimeShift2 = vUv + noiseScale * vec2( noiseGeneratorTimeShift2.g, noiseGeneratorTimeShift2.b );
+	vec4 blendColor = texture2D( blendTexture, uvNoiseTimeShift2 * vec2(repeatS, repeatT) ) - blendOffset * vec4(1.0, 1.0, 1.0, 1.0);
+
+	vec4 theColor = baseColor + blendColor;
+	theColor.a = alpha;
+	gl_FragColor = theColor;
+}  
+`
          	
-			
-			
 			var camera,scene,renderer, controls;
 			var mapCamera, mapWidth = 240, mapHeight = 160;
 
@@ -53,82 +114,6 @@
 			
 				scene.add( controls.getObject() );
 
-				var onKeyDown = function ( event ) {
-
-					switch ( event.keyCode ) {
-
-						case 38: // up
-						case 87: // w
-							moveForward = true;
-							break;
-
-						case 37: // left
-						case 65: // a
-							moveLeft = true;
-              				break;
-
-						case 40: // down
-						case 83: // s
-							moveBackward = true;
-							break;
-
-						case 39: // right
-						case 68: // d
-							moveRight = true;
-							break;
-
-						case 16: //shift
-							shift = true;
-							break;
-						
-						case 32: //space
-							space = true;
-							break;
-					}
-
-				};
-
-				var onKeyUp = function ( event ) {
-
-					switch( event.keyCode ) {
-
-						case 38: // up
-						case 87: // w
-							moveForward = false;
-							break;
-
-						case 37: // left
-						case 65: // a
-							moveLeft = false;
-							break;
-
-						case 40: // down
-						case 83: // s
-							moveBackward = false;
-							break;
-
-						case 39: // right
-						case 68: // d
-							moveRight = false;
-							break;
-
-						case 16: //shift
-							shift = false;
-							break;
-							
-						case 32: //space
-						space = false;
-						break;
-
-					}
-				};
-
-document.addEventListener( 'keydown', onKeyDown, false );
-document.addEventListener( 'keyup', onKeyUp, false );
-document.addEventListener('click', function() {
-	controls.lock();
-}, false);
-
 
 var renderer = new THREE.WebGLRenderer({ antialias: true } ); 
 renderer.setPixelRatio( window.devicePixelRatio );
@@ -136,10 +121,46 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement );
 window.addEventListener( 'resize', onWindowResize, false );
 
-//create lava material for sphere, use lava image
-var lavaMaterial = new THREE.MeshBasicMaterial({
-	map: THREE.ImageUtils.loadTexture("./img/lava.jpg"),
-});
+var lavaTexture = new THREE.ImageUtils.loadTexture( 'img/lava.jpg');
+var baseSpeed = 0.02;
+var repeatS = repeatT = 4.0;
+
+var noiseTexture = new THREE.ImageUtils.loadTexture( 'img/cloud.png' );
+noiseTexture.wrapS = noiseTexture.wrapT = THREE.RepeatWrapping; 
+var noiseScale = 0.5;
+
+var blendTexture = new THREE.ImageUtils.loadTexture( 'img/lava.jpg' );
+blendTexture.wrapS = blendTexture.wrapT = THREE.RepeatWrapping; 
+var blendSpeed = 0.01;
+var blendOffset = 0.25;
+var bumpTexture = noiseTexture;
+bumpTexture.wrapS = bumpTexture.wrapT = THREE.RepeatWrapping; 	
+var bumpSpeed   = 0.15;
+var bumpScale   = 40.0;
+
+this.customUniforms = {
+	baseTexture: 	{ type: "t", value: lavaTexture },
+	baseSpeed:		{ type: "f", value: baseSpeed },
+	repeatS:		{ type: "f", value: repeatS },
+	repeatT:		{ type: "f", value: repeatT },
+	noiseTexture:	{ type: "t", value: noiseTexture },
+	noiseScale:		{ type: "f", value: noiseScale },
+	blendTexture:	{ type: "t", value: blendTexture },
+	blendSpeed: 	{ type: "f", value: blendSpeed },
+	blendOffset: 	{ type: "f", value: blendOffset },
+	bumpTexture:	{ type: "t", value: bumpTexture },
+	bumpSpeed: 		{ type: "f", value: bumpSpeed },
+	bumpScale: 		{ type: "f", value: bumpScale },
+	alpha: 			{ type: "f", value: 1.0 },
+	time: 			{ type: "f", value: 1.0 }
+};
+
+var customMaterial = new THREE.ShaderMaterial( 
+	{
+	    uniforms: customUniforms,
+		vertexShader:  _sunVS,
+		fragmentShader: _sunFS
+	}   );
 												
 var sunY = 600;
 var sunX = 1;
@@ -149,11 +170,11 @@ let sun = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
 sun.position.set(sunX,sunY,sunZ);
 sun.target.position.set(0,0,0);
 scene.add(sun);
-scene.add(sun.target);
+//scene.add(sun.target);
 
 var ballGeometry = new THREE.SphereGeometry( 60, 64, 64 );
-	var ball = new THREE.Mesh(	ballGeometry, lavaMaterial );
-	ball.position.set(sunX,sunY,sunZ);
+	var ball = new THREE.Mesh(	ballGeometry, customMaterial );
+	//ball.position.set(sunX,sunY,sunZ);
 	ball.castShadow = false;
 	ball.receiveShadow = false;
 	sun.add( ball );
@@ -206,8 +227,11 @@ function onWindowResize() {
 var skyBoxRotation = 0.001;
 function animate() {
    skybox.rotation.y += skyBoxRotation;
+   customUniforms.time.value += delta;
+   ball.rotation.y += 0.01;
    requestAnimationFrame( animate );
    render();
+   update();
 
    if ( controlsEnabled == true ) {
 
@@ -295,6 +319,10 @@ function render()
 	//  lower_left_x, lower_left_y, viewport_width, viewport_height
 	renderer.setViewport( 10, h - mapHeight - 10, mapWidth, mapHeight );
 	renderer.render( scene, mapCamera );
+}
+
+function update()
+{
 }
 	animate();
 
