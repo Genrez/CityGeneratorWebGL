@@ -10,6 +10,14 @@ var params = {
     sunZ: 2,
     sunIntensity: 1,
 
+    generate: function () {
+        generateCity();
+    },
+
+    clear: function () {
+        clearCity();
+    },
+
     sky1: function () { 
         skybox.material = materialArray;
     },
@@ -27,7 +35,12 @@ var params = {
 var cameraSettings = gui.addFolder('Camera Settings');
 
 var generationSettings = gui.addFolder('Generation Settings');
-//create a button called regenerate that refreshes the scene
+
+var generation = generationSettings.add(params, 'generate');
+generation.name("Generate");
+
+var clear = generationSettings.add(params, 'clear');
+clear.name("Clear");
 
 var lightSettings = gui.addFolder('Light Settings');
 

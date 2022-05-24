@@ -82,7 +82,6 @@ function generateBuilding(i, j) {
     });
 }
 
-//Get random colour thats not dark
 function getRandomColor() {
     let color = "#";
     for (let i = 0; i < 3; i++)
@@ -90,7 +89,16 @@ function getRandomColor() {
     return color;
   }
 
-generateCity()
+function clearCity() {
+    var meshes = scene.children;
+    for (var i = 0; i < meshes.length; i++) {
+        if (meshes[i].name == "loaded_mesh") {
+            scene.remove(meshes[i]);
+        }
+    }
+}
+
+//generateCity()
 
 
 
