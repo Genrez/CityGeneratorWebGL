@@ -98,6 +98,15 @@ function clearCity() {
     }
 }
 
+var amount = 0;
+function clearNumber() {
+    for (var i = 0; i < amount.length; i++) {
+        if (meshes[i].name == "loaded_mesh") {
+            scene.remove(meshes[i]);
+        }
+    }
+}
+
 //generateCity()
 
 

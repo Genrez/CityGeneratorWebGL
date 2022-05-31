@@ -18,6 +18,28 @@ var params = {
         clearCity();
     },
 
+    addGround: function () {
+        createAshphalt();
+    },
+
+    clearGround: function () {
+        clearAsphalt(); 
+    },
+
+    addMountain: function () {
+        createMountains();
+    },
+
+    clearMountain: function () {
+        clearMountains();
+    },
+
+    //amount: 0,
+
+    //amountToRemove: function () {
+    //    clearNumber();
+   // },
+
     sky1: function () { 
         skybox.material = materialArray;
     },
@@ -30,6 +52,8 @@ var params = {
     sky4: function () {
         skybox.material = materialArray4;
     },
+
+    displacementValue: 70,
 }
 
 var cameraSettings = gui.addFolder('Camera Settings');
@@ -42,7 +66,25 @@ var generation = generationSettings.add(params, 'generate');
 generation.name("Generate");
 
 var clear = generationSettings.add(params, 'clear');
-clear.name("Clear");
+clear.name("Clear City");
+
+var addGround = generationSettings.add(params, 'addGround');
+addGround.name("Add Ground");
+
+var clearGround = generationSettings.add(params, 'clearGround');
+clearGround.name("Clear Ground");
+
+var addMountain  = generationSettings.add(params, 'addMountain');
+addMountain.name("Add Mountains");
+
+var clearMountain = generationSettings.add(params, 'clearMountain');
+clearMountain.name("Clear Mountains");
+
+//var clearAmount = generationSettings.add(params, 'amountToRemove');
+//clearAmount.name("ClearAmount");
+//generationSettings.add(params, 'amount', 0, 100).onChange(function (value) {
+//    amount = value;
+//});
 
 var lightSettings = gui.addFolder('Light Settings');
 
@@ -81,6 +123,9 @@ var skyB4 = skySettings.add(params, 'sky4');
 skyB4.name("4");
 
 var planeSettings = gui.addFolder('Plane Settings');
+planeSettings.add(params, 'displacementValue', 0, 200).onChange(function (value) {
+    displacementValue = value;
+});
 
 
 
