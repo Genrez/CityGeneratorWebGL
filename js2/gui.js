@@ -34,6 +34,8 @@ var params = {
 
 var cameraSettings = gui.addFolder('Camera Settings');
 
+var weatherSettings = gui.addFolder('Weather Settings');
+
 var generationSettings = gui.addFolder('Generation Settings');
 
 var generation = generationSettings.add(params, 'generate');
