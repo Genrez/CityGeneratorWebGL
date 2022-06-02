@@ -63,6 +63,8 @@ function createAshphalt() {
     var ashphaltMeshZ = createAshphaltMesh(cityGeometry, asphaltMaterial);
     ashphaltMeshZ.position.z = 0;
     ashphaltMeshZ.position.x = 0;
+    ashphaltMeshZ.castShadow = true; 
+    ashphaltMeshZ.receiveShadow = true; 
     ashphaltMeshZ.name = "Asphalt";
 
     var mesh = scene.getObjectByName("Asphalt");

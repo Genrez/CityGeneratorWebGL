@@ -93,6 +93,9 @@ void main()
 				camera.position.set(Pos.x,Pos.y,Pos.z);
 				var Dir = new THREE.Vector3(0,0,1);
 				camera.lookAt(Dir.x,Dir.y,Dir.z);
+
+				//var boundingBox = new THREE.Box3().fromObject( camera );
+                //var collision = boundingBox.containsPoint( camera.position );
 				scene.add(camera);
 
 				// orthographic cameras
@@ -161,7 +164,8 @@ var customMaterial = new THREE.ShaderMaterial(
 		vertexShader:  _sunVS,
 		fragmentShader: _sunFS
 	}   );
-												
+
+//POINTER LIGHT
 var sunY = 600;
 var sunX = 1;
 var sunZ = 1;
@@ -169,19 +173,22 @@ var sunIntensity = 2;
 let sun = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
 sun.position.set(sunX,sunY,sunZ);
 sun.target.position.set(0,0,0);
+sun.castShadow = true;
 scene.add(sun);
-//scene.add(sun.target);
 
 var ballGeometry = new THREE.SphereGeometry( 60, 64, 64 );
-	var ball = new THREE.Mesh(	ballGeometry, customMaterial );
-	//ball.position.set(sunX,sunY,sunZ);
-	ball.castShadow = false;
-	ball.receiveShadow = false;
-	sun.add( ball );
-
+var ball = new THREE.Mesh(	ballGeometry, customMaterial );
+//ball.position.set(sunX,sunY,sunZ);
+ball.castShadow = false;
+ball.receiveShadow = false;
+sun.add( ball );
 
 const helper = new THREE.DirectionalLightHelper( sun, 5 );
 scene.add( helper );
+
+//AMBIENT LIGHT
+var ambientLight = new THREE.AmbientLight( 0x404040, 0.5 );
+scene.add( ambientLight );
 
 //Skybox
 function createPathStrings(filename) {
