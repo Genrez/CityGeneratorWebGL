@@ -70,25 +70,6 @@ var onKeyUp = function ( event ) {
 
 document.addEventListener( 'keydown', onKeyDown, false );
 document.addEventListener( 'keyup', onKeyUp, false );
-document.addEventListener('click', function() {
-controls.lock();
-}, false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 		var raycaster = new THREE.Raycaster();
