@@ -1,16 +1,17 @@
 let particles;
 let positions = [], velocities = [];
 
-var numSnowflakes = 2750;
+var numSnowflakes = 1000;
 var maxRange = 1000, minRange = maxRange/2;
 var minHeight = 150;
 
 var geometry = new THREE.BufferGeometry();
 var textureLoader = new THREE.TextureLoader();
 
+function snowWeathers() {
 addSnowflakes();
 
-function addSnowflakes () {
+function addSnowflakes() {
     for(let i=0; i<numSnowflakes; i++) {
       positions.push(
         Math.floor(Math.random() * maxRange - minRange),
@@ -36,4 +37,10 @@ const flakeMaterial = new THREE.PointsMaterial({
 });
 
 particles = new THREE.Points(geometry, flakeMaterial);
+particles.name = "snow";
 scene.add(particles);
+}
+
+function removeParticles() {
+  scene.remove(particles);
+}

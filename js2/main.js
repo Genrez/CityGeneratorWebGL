@@ -242,7 +242,10 @@ function animate() {
    customUniforms.time.value += delta;
    ball.rotation.y += 0.01;
    requestAnimationFrame( animate );
+   var mesh = scene.getObjectByName("snow");
+   if (mesh) {
    updateParticles();
+   }
    render();
    update();
 

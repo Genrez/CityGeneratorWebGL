@@ -10,6 +10,17 @@ var params = {
     sunZ: 2,
     sunIntensity: 1,
 
+    numSnowflakes: 1000,
+    
+    snowWeather: function() {
+        removeParticles();
+        snowWeathers();
+    },
+
+    deleteWeather: function() {
+        removeParticles();
+    },
+
     generate: function () {
         generateCity();
     },
@@ -53,12 +64,21 @@ var params = {
         skybox.material = materialArray4;
     },
 
-    displacementValue: 70,
+    mountainDisplacement: 70,
 }
 
 var cameraSettings = gui.addFolder('Camera Settings');
 
 var weatherSettings = gui.addFolder('Weather Settings');
+var snowWeather = weatherSettings.add(params, 'snowWeather');
+snowWeather.name("Add Snow Weather");
+
+var deleteWeather = weatherSettings.add(params, 'deleteWeather');
+deleteWeather.name("Delete Weather");
+
+weatherSettings.add(params, 'numSnowflakes', 0, 2500).onChange(function (value) {
+    numSnowflakes = value;
+});
 
 var generationSettings = gui.addFolder('Generation Settings');
 
@@ -124,7 +144,7 @@ skyB4.name("4");
 
 var planeSettings = gui.addFolder('Plane Settings');
 planeSettings.add(params, 'displacementValue', 0, 200).onChange(function (value) {
-    displacementValue = value;
+    mountainDisplacement = value;
 });
 
 

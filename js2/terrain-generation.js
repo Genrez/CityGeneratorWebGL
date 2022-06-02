@@ -1,7 +1,6 @@
 var AsphaltX = 900;
 var AsphaltZ = 900;
-var displacementValue = 70;
-
+var mountainDisplacement = 70;
 
 createAshphalt();
 createMountains();
@@ -19,7 +18,7 @@ function createMountains() {
         color: 'grey',
         map: mountainTexture,
         displacementMap: mountainDisplacementMap,
-        displacementScale: displacementValue,
+        displacementScale: mountainDisplacement,
     })
    
     if (!mesh) {
