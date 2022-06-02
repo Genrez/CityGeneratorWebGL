@@ -65,7 +65,7 @@ void main()
          	
 			var camera,scene,renderer, controls;
 			var mapCamera, mapWidth = 240, mapHeight = 160;
-
+         
 
 			var controlsEnabled = true;
 
@@ -191,6 +191,7 @@ var ambientLight = new THREE.AmbientLight( 0x404040, 0.5 );
 scene.add( ambientLight );
 
 //Skybox
+var skyBoxRotation = 0.001;
 function createPathStrings(filename) {
    const basePath = "./img/Skyboxes/";
    const baseFilename = basePath + filename;
@@ -231,12 +232,17 @@ function onWindowResize() {
    renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-var skyBoxRotation = 0.001;
+
+
+animate();
+
 function animate() {
+   
    skybox.rotation.y += skyBoxRotation;
    customUniforms.time.value += delta;
    ball.rotation.y += 0.01;
    requestAnimationFrame( animate );
+   updateParticles();
    render();
    update();
 
@@ -307,12 +313,14 @@ function animate() {
             renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.setClearColor( 0x000000, 1 );
 			renderer.autoClear = false;
+
+			
 }
 
 function render() 
 {
    var w = window.innerWidth, h = window.innerHeight;
-
+    
 	// setViewport parameters:
 	//  lower_left_x, lower_left_y, viewport_width, viewport_height
 	renderer.setViewport( 0, 0, w, h );
@@ -326,10 +334,25 @@ function render()
 	//  lower_left_x, lower_left_y, viewport_width, viewport_height
 	renderer.setViewport( 10, h - mapHeight - 10, mapWidth, mapHeight );
 	renderer.render( scene, mapCamera );
+	
 }
 
 function update()
-{
+{	
 }
-	animate();
+
+function updateParticles() {
+	for (let i = 0; i < numSnowflakes*3; i +=3) {
+		particles.geometry.attributes.position.array[i] -= particles.geometry.attributes.velocity.array[i];
+		particles.geometry.attributes.position.array[i+1] -= particles.geometry.attributes.velocity.array[i+1];
+        particles.geometry.attributes.position.array[i+2] -= particles.geometry.attributes.velocity.array[i+2];
+
+		if (particles.geometry.attributes.position.array[i+1] < 0) {
+			particles.geometry.attributes.position.array[i] = Math.floor(Math.random()*maxRange - minRange);
+			particles.geometry.attributes.position.array[i+1] = Math.floor(Math.random()*maxRange + minRange);
+			particles.geometry.attributes.position.array[i+2] = Math.floor(Math.random()*maxRange - minRange);
+		}
+	}
+	particles.geometry.attributes.position.needsUpdate = true;
+}
 
