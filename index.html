@@ -31,12 +31,44 @@
     				width: 100%;
     				text-align: center;
     			}
-               
-    </style>
+          #manual {
+            position: absolute;
+            top: 300px;
+            left: 0px;
+            width: 300px;
+            text-align: left;
+            padding: 18px;
+            z-index: 1;
+            background: rgba(44, 44, 44, 0.4);
+          }
+          #info-btn {
+           float: left;
+          }
+
+</style>
 
     <div id="info">
         <h3>City Procedural Generator</h3>
     </div>
+
+    <div id="manual">
+      <h1>Manual</h1>
+  
+      <div id="manual-content">  
+        <h4>Camera Controls</h4>
+        <ul>
+          <li>WASD - Movement control</li>
+          <li>MOUSE - Camera control</li>
+        </ul>
+  
+        <h4>Other Controls</h4>
+        <ul>
+          <li>E - Spawn building at your position</li>
+          <li>GUI - Change the scene by adjusting 
+            properties and values</li>
+        </ul>
+    </div>
+  </body>
 
      <script type="text/javascript" src="js2/main.js"></script>
      <script type="text/javascript" src="js2/gui.js"></script>
@@ -46,5 +78,5 @@
      <script type="text/javascript" src="js2/input.js"></script>
      <script type="text/javascript" src="js2/weather.js"></script>
     
-  </body>
+ 
 </html>
