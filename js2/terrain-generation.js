@@ -1,11 +1,13 @@
 var AsphaltX = 900;
 var AsphaltZ = 900;
+var MountainX = 900;
+var MountainZ = 900;
 var mountainDisplacement = 70;
 
 createAshphalt();
 createMountains();
 function createMountains() {
-    var mountainGeometry = new THREE.PlaneGeometry(900,900, 500, 500);
+    var mountainGeometry = new THREE.PlaneGeometry(AsphaltX, AsphaltZ, 500, 500);
     var mesh = scene.getObjectByName("Mountain");
 
     let mountainDisplacementMap = new THREE.TextureLoader()
@@ -22,6 +24,16 @@ function createMountains() {
     })
    
     if (!mesh) {
+    scene.add(createMountain(mountainGeometry, mountainMaterial, AsphaltX, 0));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, -AsphaltX, 0));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, 0, AsphaltZ));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, 0, -AsphaltZ));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, AsphaltX, -AsphaltZ));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, -AsphaltX, AsphaltZ));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, AsphaltX, AsphaltZ));
+    scene.add(createMountain(mountainGeometry, mountainMaterial, -AsphaltX, -AsphaltZ));
+    }
+   /*
     scene.add(createMountain(mountainGeometry, mountainMaterial, 900, 0));
     scene.add(createMountain(mountainGeometry, mountainMaterial, -900, 0));
     scene.add(createMountain(mountainGeometry, mountainMaterial, 0, 900));
@@ -30,7 +42,7 @@ function createMountains() {
     scene.add(createMountain(mountainGeometry, mountainMaterial, -900, 900));
     scene.add(createMountain(mountainGeometry, mountainMaterial, 900, 900));
     scene.add(createMountain(mountainGeometry, mountainMaterial, -900, -900));
-    }
+    */
 }
 
 function createMountain(mountainGeometry, mountainMaterial, x, z) {
@@ -44,7 +56,7 @@ function createMountain(mountainGeometry, mountainMaterial, x, z) {
 }
 
 function createAshphalt() {
-    var cityGeometry = new THREE.PlaneGeometry(900, 900, 500, 500);
+    var cityGeometry = new THREE.PlaneGeometry(AsphaltX, AsphaltZ, 500, 500);
 
     let asphaltDisplacementMap = new THREE.TextureLoader()
     .load("heightmap/asphalt-displacement.png");

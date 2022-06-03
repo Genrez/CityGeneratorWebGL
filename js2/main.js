@@ -1,67 +1,4 @@
-const _sunVS = `
-uniform sampler2D noiseTexture;
-uniform float noiseScale;
 
-uniform sampler2D bumpTexture;
-uniform float bumpSpeed;
-uniform float bumpScale;
-
-uniform float time;
-
-varying vec2 vUv;
-
-void main() 
-{ 
-    vUv = uv;
-	
-	vec2 uvTimeShift = vUv + vec2( 1.1, 1.9 ) * time * bumpSpeed;
-	vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift );
-	vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.g );
-	vec4 bumpData = texture2D( bumpTexture, uvTimeShift );
-	float displacement = ( vUv.y > 0.999 || vUv.y < 0.001 ) ? 
-		bumpScale * (0.3 + 0.02 * sin(time)) :  
-		bumpScale * bumpData.r;
-    vec3 newPosition = position + normal * displacement;
-	
-	gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
-}
-`
-
-const _sunFS = `
-uniform sampler2D baseTexture;
-uniform float baseSpeed;
-uniform float repeatS;
-uniform float repeatT;
-
-uniform sampler2D noiseTexture;
-uniform float noiseScale;
-
-uniform sampler2D blendTexture;
-uniform float blendSpeed;
-uniform float blendOffset;
-
-uniform float time;
-uniform float alpha;
-
-varying vec2 vUv;
-
-void main() 
-{
-	vec2 uvTimeShift = vUv + vec2( -0.7, 1.5 ) * time * baseSpeed;	
-	vec4 noiseGeneratorTimeShift = texture2D( noiseTexture, uvTimeShift );
-	vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noiseGeneratorTimeShift.r, noiseGeneratorTimeShift.b );
-	vec4 baseColor = texture2D( baseTexture, uvNoiseTimeShift * vec2(repeatS, repeatT) );
-
-	vec2 uvTimeShift2 = vUv + vec2( 1.3, -1.7 ) * time * blendSpeed;	
-	vec4 noiseGeneratorTimeShift2 = texture2D( noiseTexture, uvTimeShift2 );
-	vec2 uvNoiseTimeShift2 = vUv + noiseScale * vec2( noiseGeneratorTimeShift2.g, noiseGeneratorTimeShift2.b );
-	vec4 blendColor = texture2D( blendTexture, uvNoiseTimeShift2 * vec2(repeatS, repeatT) ) - blendOffset * vec4(1.0, 1.0, 1.0, 1.0);
-
-	vec4 theColor = baseColor + blendColor;
-	theColor.a = alpha;
-	gl_FragColor = theColor;
-}  
-`
          	
 			var camera,scene,renderer, controls;
 			var mapCamera, mapWidth = 240, mapHeight = 160;
@@ -126,81 +63,26 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement );
 window.addEventListener( 'resize', onWindowResize, false );
 
-var lavaTexture = new THREE.ImageUtils.loadTexture( 'img/lava.jpg');
-var baseSpeed = 0.02;
-var repeatS = repeatT = 4.0;
-
-var noiseTexture = new THREE.ImageUtils.loadTexture( 'img/cloud.png' );
-noiseTexture.wrapS = noiseTexture.wrapT = THREE.RepeatWrapping; 
-var noiseScale = 0.5;
-
-var blendTexture = new THREE.ImageUtils.loadTexture( 'img/lava.jpg' );
-blendTexture.wrapS = blendTexture.wrapT = THREE.RepeatWrapping; 
-var blendSpeed = 0.01;
-var blendOffset = 0.25;
-var bumpTexture = noiseTexture;
-bumpTexture.wrapS = bumpTexture.wrapT = THREE.RepeatWrapping; 	
-var bumpSpeed   = 0.15;
-var bumpScale   = 40.0;
-
-this.customUniforms = {
-	baseTexture: 	{ type: "t", value: lavaTexture },
-	baseSpeed:		{ type: "f", value: baseSpeed },
-	repeatS:		{ type: "f", value: repeatS },
-	repeatT:		{ type: "f", value: repeatT },
-	noiseTexture:	{ type: "t", value: noiseTexture },
-	noiseScale:		{ type: "f", value: noiseScale },
-	blendTexture:	{ type: "t", value: blendTexture },
-	blendSpeed: 	{ type: "f", value: blendSpeed },
-	blendOffset: 	{ type: "f", value: blendOffset },
-	bumpTexture:	{ type: "t", value: bumpTexture },
-	bumpSpeed: 		{ type: "f", value: bumpSpeed },
-	bumpScale: 		{ type: "f", value: bumpScale },
-	alpha: 			{ type: "f", value: 1.0 },
-	time: 			{ type: "f", value: 1.0 }
-};
-
-var customMaterial = new THREE.ShaderMaterial( 
-	{
-	    uniforms: customUniforms,
-		vertexShader:  _sunVS,
-		fragmentShader: _sunFS
-	}   );
-
-//POINTER LIGHT
-var sunY = 600;
-var sunX = 1;
-var sunZ = 1;
-var sunIntensity = 2;
-let sun = new THREE.DirectionalLight(0xFFFFFF, sunIntensity);
-sun.position.set(sunX,sunY,sunZ);
-sun.target.position.set(0,0,0);
-sun.castShadow = true;
-scene.add(sun);
-
-var ballGeometry = new THREE.SphereGeometry( 60, 64, 64 );
-var ball = new THREE.Mesh(	ballGeometry, customMaterial );
+//var ballGeometry = new THREE.SphereGeometry( 60, 64, 64 );
+//var ball = new THREE.Mesh(	ballGeometry, customMaterial );
 //ball.position.set(sunX,sunY,sunZ);
-ball.castShadow = false;
-ball.receiveShadow = false;
-sun.add( ball );
+//ball.castShadow = false;
+//ball.receiveShadow = false;
+//sun.add( ball );
 
-const helper = new THREE.DirectionalLightHelper( sun, 5 );
-scene.add( helper );
+//const helper = new THREE.DirectionalLightHelper( sun, 5 );
+//scene.add( helper );
 
-//CUBE 
-var cubeGeometry = new THREE.BoxGeometry( 10, 50, 10 );
-var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, transparent: true, opacity: 0.5 } );
-var cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-cube.position.set(0,0,0);
-cube.castShadow = true;
-cube.receiveShadow = true;
-scene.add(cube);
-
-
-//AMBIENT LIGHT
-var ambientLight = new THREE.AmbientLight( 0x404040, 0.5 );
-scene.add( ambientLight );
+//Plane
+var planeGeometry = new THREE.PlaneGeometry(3000,3000,1,1);
+var dirtTexture = new THREE.TextureLoader().load( './textures/Dirt1.jpg' );
+dirtTexture.wrapS = THREE.RepeatWrapping;
+dirtTexture.wrapT = THREE.RepeatWrapping;
+dirtTexture.repeat.set( 5, 5 );
+var planeMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide, map: dirtTexture } );
+var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+plane.rotation.x = -Math.PI/2;
+scene.add(plane);
 
 //Skybox
 var skyBoxRotation = 0.001;
@@ -244,15 +126,10 @@ function onWindowResize() {
    renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-
-
 animate();
 
 function animate() {
-   
    skybox.rotation.y += skyBoxRotation;
-   customUniforms.time.value += delta;
-   ball.rotation.y += 0.01;
    requestAnimationFrame( animate );
    var mesh = scene.getObjectByName("snow");
    if (mesh) {

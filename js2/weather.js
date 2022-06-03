@@ -35,7 +35,7 @@ const flakeMaterial = new THREE.PointsMaterial({
   blending: THREE.AdditiveBlending, 
   depthTest: false,
   transparent: false,
-  opacity: 0.7,
+  opacity: 1,
 });
 
 particles = new THREE.Points(geometry, flakeMaterial);
@@ -92,6 +92,12 @@ geometry.setAttribute('velocity', new THREE.Float32BufferAttribute(velocities, 3
   rainparticles.name = "rain";
   scene.add(rainparticles);
  
+}
+
+function increaseVelocity() {
+  for(var i = 0; i < velocities.length; i++) {
+    velocities[i] += 0.1;
+  }
 }
 
 //rainWeathers();

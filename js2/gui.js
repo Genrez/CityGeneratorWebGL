@@ -6,7 +6,7 @@ var params = {
     skyBoxRotation: 0.001,
 
     sunX: 2,
-    sunY: 600,
+    sunY: 5,
     sunZ: 2,
     sunIntensity: 1,
 
@@ -69,7 +69,11 @@ var params = {
     sky4: function () {
         skybox.material = materialArray4;
     },
-
+    
+    MountainX: 900,
+    MountainZ: 900,
+    AsphaltX: 900,
+    AsphaltZ: 900,
     mountainDisplacement: 70,
 }
 
@@ -96,7 +100,7 @@ deleteWeather.name("Delete Weather");
 var generationSettings = gui.addFolder('Generation Settings');
 
 var generation = generationSettings.add(params, 'generate');
-generation.name("Generate");
+generation.name("Generate City");
 
 var clear = generationSettings.add(params, 'clear');
 clear.name("Clear City");
@@ -121,7 +125,7 @@ clearMountain.name("Clear Mountains");
 
 var lightSettings = gui.addFolder('Light Settings');
 
-lightSettings.add(params, 'sunY', 0, 1000).onChange(function (value) {
+lightSettings.add(params, 'sunY', -50, 50).onChange(function (value) {
     sun.position.y = value;
 });
 
@@ -156,9 +160,28 @@ var skyB4 = skySettings.add(params, 'sky4');
 skyB4.name("4");
 
 var planeSettings = gui.addFolder('Plane Settings');
-planeSettings.add(params, 'displacementValue', 0, 200).onChange(function (value) {
+//planeSettings.add(params, 'MountainX', 0, 2000).onChange(function (value) {
+//    MountainX = value;
+//});
+
+//planeSettings.add(params, 'MountainZ', 0, 2000).onChange(function (value) {
+//    MountainZ = value;
+//});
+
+planeSettings.add(params, 'mountainDisplacement', 0, 200).onChange(function (value) {
     mountainDisplacement = value;
 });
+
+planeSettings.add(params, 'AsphaltX', 0, 2000).onChange(function (value) {
+    AsphaltX = value;
+});
+
+planeSettings.add(params, 'AsphaltZ', 0, 2000).onChange(function (value) {
+    AsphaltZ = value;
+});
+
+
+
 
 
 
