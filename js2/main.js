@@ -118,6 +118,8 @@ void main()
 				scene.add( controls.getObject() );
 
 
+
+
 var renderer = new THREE.WebGLRenderer({ antialias: true } ); 
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize(window.innerWidth,window.innerHeight);
@@ -186,6 +188,16 @@ sun.add( ball );
 const helper = new THREE.DirectionalLightHelper( sun, 5 );
 scene.add( helper );
 
+//CUBE 
+var cubeGeometry = new THREE.BoxGeometry( 10, 50, 10 );
+var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, transparent: true, opacity: 0.5 } );
+var cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+cube.position.set(0,0,0);
+cube.castShadow = true;
+cube.receiveShadow = true;
+scene.add(cube);
+
+
 //AMBIENT LIGHT
 var ambientLight = new THREE.AmbientLight( 0x404040, 0.5 );
 scene.add( ambientLight );
@@ -245,6 +257,10 @@ function animate() {
    var mesh = scene.getObjectByName("snow");
    if (mesh) {
    updateParticles();
+   }
+   var mesh = scene.getObjectByName("rain");
+   if (mesh) {
+   updateParticlesRain()
    }
    render();
    update();
@@ -357,5 +373,20 @@ function updateParticles() {
 		}
 	}
 	particles.geometry.attributes.position.needsUpdate = true;
+}
+
+function updateParticlesRain() {
+	for (let i = 0; i < numRaindrops*3; i +=3) {
+		rainparticles.geometry.attributes.position.array[i] -= rainparticles.geometry.attributes.velocity.array[i];
+		rainparticles.geometry.attributes.position.array[i+1] -= rainparticles.geometry.attributes.velocity.array[i+1];
+        rainparticles.geometry.attributes.position.array[i+2] -= rainparticles.geometry.attributes.velocity.array[i+2];
+
+		if (rainparticles.geometry.attributes.position.array[i+1] < 0) {
+			rainparticles.geometry.attributes.position.array[i] = Math.floor(Math.random()*maxRange - minRange);
+			rainparticles.geometry.attributes.position.array[i+1] = Math.floor(Math.random()*maxRange + minRange);
+			rainparticles.geometry.attributes.position.array[i+2] = Math.floor(Math.random()*maxRange - minRange);
+		}
+	}
+	rainparticles.geometry.attributes.position.needsUpdate = true;
 }
 

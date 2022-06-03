@@ -1,7 +1,7 @@
 var gui = new dat.GUI({
     name: "HUD"
 });
- 
+
 var params = {
     skyBoxRotation: 0.001,
 
@@ -11,10 +11,16 @@ var params = {
     sunIntensity: 1,
 
     numSnowflakes: 1000,
+    numRaindrops: 7500,
     
     snowWeather: function() {
         removeParticles();
         snowWeathers();
+    },
+
+    rainWeather: function() {
+        removeParticles();
+        rainWeathers();
     },
 
     deleteWeather: function() {
@@ -72,13 +78,20 @@ var cameraSettings = gui.addFolder('Camera Settings');
 var weatherSettings = gui.addFolder('Weather Settings');
 var snowWeather = weatherSettings.add(params, 'snowWeather');
 snowWeather.name("Add Snow Weather");
+weatherSettings.add(params, 'numSnowflakes', 0, 2500).onChange(function (value) {
+    numSnowflakes = value;
+});
+
+var rainWeather = weatherSettings.add(params, 'rainWeather');
+rainWeather.name("Add Rain Weather");
+weatherSettings.add(params, 'numRaindrops', 0, 10000).onChange(function (value) {
+    numRaindrops = value;
+});
 
 var deleteWeather = weatherSettings.add(params, 'deleteWeather');
 deleteWeather.name("Delete Weather");
 
-weatherSettings.add(params, 'numSnowflakes', 0, 2500).onChange(function (value) {
-    numSnowflakes = value;
-});
+
 
 var generationSettings = gui.addFolder('Generation Settings');
 
