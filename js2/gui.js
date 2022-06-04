@@ -13,41 +13,41 @@ var params = {
     numSnowflakes: 1000,
     numRaindrops: 7500,
     
-    snowWeather: function() {
+    snowWeather: () => {
         removeParticles();
         snowWeathers();
     },
 
-    rainWeather: function() {
+    rainWeather: () => {
         removeParticles();
         rainWeathers();
     },
 
-    deleteWeather: function() {
+    deleteWeather: () => {
         removeParticles();
     },
 
-    generate: function () {
+    generate: () => {
         generateCity();
     },
 
-    clear: function () {
+    clear: () => {
         clearCity();
     },
 
-    addGround: function () {
+    addGround: () => {
         createAshphalt();
     },
 
-    clearGround: function () {
+    clearGround: () => {
         clearAsphalt(); 
     },
 
-    addMountain: function () {
+    addMountain: () => {
         createMountains();
     },
 
-    clearMountain: function () {
+    clearMountain: () => {
         clearMountains();
     },
 
@@ -57,16 +57,16 @@ var params = {
     //    clearNumber();
    // },
 
-    sky1: function () { 
+    sky1: () => { 
         skybox.material = materialArray;
     },
-    sky2: function () {
+    sky2: () => {
         skybox.material = materialArray2;
     },
-    sky3: function () {
+    sky3: () => {
         skybox.material = materialArray3;
     },
-    sky4: function () {
+    sky4: () => {
         skybox.material = materialArray4;
     },
     
@@ -75,6 +75,13 @@ var params = {
     AsphaltX: 900,
     AsphaltZ: 900,
     mountainDisplacement: 70,
+
+    generatePlane: () => {
+        clearMountains();
+        clearAsphalt();
+        createAshphalt();
+        createMountains();
+    }
 }
 
 var cameraSettings = gui.addFolder('Camera Settings');
@@ -179,6 +186,9 @@ planeSettings.add(params, 'AsphaltX', 0, 2000).onChange(function (value) {
 planeSettings.add(params, 'AsphaltZ', 0, 2000).onChange(function (value) {
     AsphaltZ = value;
 });
+
+var generatePlane = planeSettings.add(params, "generatePlane");
+generatePlane.name("Generate Plane");
 
 
 
