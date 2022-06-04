@@ -30,7 +30,7 @@
 				camera.add( listener );
 				const audioLoader = new THREE.AudioLoader();
 				var sound = new THREE.Audio( listener );
-				audioLoader.load( '/Final Assignment/Assignment-4-Project/sounds/footsteps.wav', function( buffer ) {
+				audioLoader.load( '/sounds/footsteps.wav', function( buffer ) {
 					sound.setBuffer( buffer );
 					sound.setLoop( true );
 					sound.setVolume( 1.5 );
