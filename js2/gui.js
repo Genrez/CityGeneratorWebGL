@@ -132,25 +132,25 @@ clearMountain.name("Clear Mountains");
 
 var lightSettings = gui.addFolder('Light Settings');
 
-lightSettings.add(params, 'sunY', -50, 50).onChange(function (value) {
+lightSettings.add(params, 'sunY', -50, 50).onChange((value) => {
     sun.position.y = value;
 });
 
-lightSettings.add(params, 'sunZ', 0, 100).onChange(function (value) {
+lightSettings.add(params, 'sunZ', 0, 100).onChange((value) => {
     sun.position.z = value;
 });
 
-lightSettings.add(params, 'sunX', 0, 100).onChange(function (value) {
+lightSettings.add(params, 'sunX', 0, 100).onChange((value) => {
     sun.position.x = value;
 });
 
-lightSettings.add(params, 'sunIntensity', 0, 10).onChange(function (value) {
+lightSettings.add(params, 'sunIntensity', 0, 10).onChange((value) => {
     sun.intensity = value;
 });
 
 var skySettings = gui.addFolder('Sky Settings');
 
-skySettings.add(params, 'skyBoxRotation', 0.001, 0.10).onChange(function (value) {
+skySettings.add(params, 'skyBoxRotation', 0.001, 0.10).onChange((value) => {
     skyBoxRotation = value;
 });
 
@@ -175,15 +175,15 @@ var planeSettings = gui.addFolder('Plane Settings');
 //    MountainZ = value;
 //});
 
-planeSettings.add(params, 'mountainDisplacement', 0, 200).onChange(function (value) {
+planeSettings.add(params, 'mountainDisplacement', 0, 200).onChange((value) => {
     mountainDisplacement = value;
 });
 
-planeSettings.add(params, 'AsphaltX', 0, 2000).onChange(function (value) {
+planeSettings.add(params, 'AsphaltX', 0, 2000).onChange((value) => {
     AsphaltX = value;
 });
 
-planeSettings.add(params, 'AsphaltZ', 0, 2000).onChange(function (value) {
+planeSettings.add(params, 'AsphaltZ', 0, 2000).onChange((value) => {
     AsphaltZ = value;
 });
 
