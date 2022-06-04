@@ -1,5 +1,6 @@
 var numberOfBuildings = 20;
 var loader = new THREE.PLYLoader();
+var buildingScale = 10;
 
 /*
 loader.load( './models/dolphins.ply', function ( geometry ) {

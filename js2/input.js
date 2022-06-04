@@ -70,7 +70,7 @@ var onKeyUp = function ( event ) {
 
 document.onkeydown = function(e) {
 	if (e.keyCode == 69) {
-		generateBuilding(controls.getObject().position.x , controls.getObject().position.z );
+		generateBuilding(controls.getObject().position.x , controls.getObject().position.z, buildingScale);
 	}
 }
 
