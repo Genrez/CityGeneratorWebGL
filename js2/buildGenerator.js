@@ -23,30 +23,29 @@ loader.load( './models/dolphins.ply', function ( geometry ) {
 } );
 */
 
-function generateCity() {
+function generateCity(spaceBetweenBuildings, buildingScale) {
   
-    for (var i = 72; i < AsphaltX/2-10; i += 72) {
-        for (var j = 72; j < AsphaltZ/2-10; j += 72) {
-            generateBuilding(i, j);
+    for (var i = spaceBetweenBuildings; i < AsphaltX/2-10; i += spaceBetweenBuildings) {
+        for (var j = spaceBetweenBuildings; j < AsphaltZ/2-10; j += spaceBetweenBuildings) {
+            generateBuilding(i, j, buildingScale);
         }
     }
 
-    
-    for (var i = 72; i < AsphaltX/2-10; i += 72) {
-        for (var j = 0; j > -AsphaltZ/2+10; j -= 72) {
-            generateBuilding(i, j);
+    for (var i = spaceBetweenBuildings; i < AsphaltX/2-10; i += spaceBetweenBuildings) {
+        for (var j = 0; j > -AsphaltZ/2+10; j -= spaceBetweenBuildings) {
+            generateBuilding(i, j, buildingScale);
         }
     }
     
-    for (var i = 0; i > -AsphaltX/2+10; i -= 72) {
-        for (var j = 72; j > -AsphaltZ/2+10; j -= 72) {
-            generateBuilding(i, j);
+    for (var i = 0; i > -AsphaltX/2+10; i -= spaceBetweenBuildings) {
+        for (var j = spaceBetweenBuildings; j > -AsphaltZ/2+10; j -= spaceBetweenBuildings) {
+            generateBuilding(i, j, buildingScale);
         }
     }
   
-    for (var i = 0; i > -AsphaltX/2+10; i -= 72) {
-        for (var j = 144; j < AsphaltZ/2-10; j += 72) {
-            generateBuilding(i, j);
+    for (var i = 0; i > -AsphaltX/2+10; i -= spaceBetweenBuildings) {
+        for (var j = 144; j < AsphaltZ/2-10; j += spaceBetweenBuildings) {
+            generateBuilding(i, j, buildingScale);
         }
     }
     
@@ -54,7 +53,7 @@ function generateCity() {
 }
 
 
-function generateBuilding(i, j) {
+function generateBuilding(i, j, buildingScale) {
     var model = Math.floor(Math.random() * 5) + 1;
     var randomColor = Math.floor(Math.random()*16777215).toString(16);
     loader.load('models/Building' + model + '.ply', function (geometry) {
@@ -73,8 +72,7 @@ function generateBuilding(i, j) {
         mesh.rotation.z = Math.floor(Math.random() * 360);
         
         mesh.rotation.x = - Math.PI / 2;
-        mesh.scale.set(5, 5, Math.floor(Math.random() * 20)+10);
-       // mesh.scale.y = Math.random() * 6 + 1;
+        mesh.scale.set(5, 5, Math.floor(Math.random() * 20)+ buildingScale);
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         
@@ -92,9 +90,11 @@ function getRandomColor() {
 
 function clearCity() {
     var meshes = scene.children;
-    for (var i = 0; i < meshes.length; i++) {
-        if (meshes[i].name == "loaded_mesh") {
-            scene.remove(meshes[i]);
+    for (var j = 0; j < 10; ++j) {
+        for (var i = 0; i < meshes.length; i++) {
+            if (meshes[i].name == "loaded_mesh") {
+                scene.remove(meshes[i]);
+            }
         }
     }
 }
@@ -107,8 +107,6 @@ function clearNumber() {
         }
     }
 }
-
-//generateCity()
 
 
 

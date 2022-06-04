@@ -12,6 +12,9 @@ var params = {
 
     numSnowflakes: 1000,
     numRaindrops: 7500,
+
+    spaceBetwBuild: 72,
+    buildingScale: 10,
     
     snowWeather: () => {
         removeParticles();
@@ -28,7 +31,8 @@ var params = {
     },
 
     generate: () => {
-        generateCity();
+        clearCity();
+        generateCity(params.spaceBetwBuild, params.buildingScale);
     },
 
     clear: () => {
@@ -40,6 +44,7 @@ var params = {
     },
 
     clearGround: () => {
+        clearCity();
         clearAsphalt(); 
     },
 
@@ -102,9 +107,10 @@ weatherSettings.add(params, 'numRaindrops', 0, 10000).onChange(function (value) 
 var deleteWeather = weatherSettings.add(params, 'deleteWeather');
 deleteWeather.name("Delete Weather");
 
-
-
 var generationSettings = gui.addFolder('Generation Settings');
+
+generationSettings.add(params, 'spaceBetwBuild', 72, 150);
+generationSettings.add(params, 'buildingScale', 1, 20);
 
 var generation = generationSettings.add(params, 'generate');
 generation.name("Generate City");
