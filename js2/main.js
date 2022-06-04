@@ -31,6 +31,9 @@
 				var Dir = new THREE.Vector3(0,0,1);
 				camera.lookAt(Dir.x,Dir.y,Dir.z);
 
+				var OrbitPos = new THREE.Vector3(0,500,0);
+				var OrbitDir = new THREE.Vector3(0,0,0);
+
 				//var boundingBox = new THREE.Box3().fromObject( camera );
                 //var collision = boundingBox.containsPoint( camera.position );
 				scene.add(camera);
