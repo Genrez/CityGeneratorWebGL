@@ -26,7 +26,7 @@ var params = {
         rainWeathers();
     },
 
-    deleteWeather: () => {
+    removeWeather: () => {
         removeParticles();
     },
 
@@ -96,6 +96,8 @@ var params = {
     fpCam : function () {
         camera.position.set(Pos.x,Pos.y,Pos.z);
        // camera.lookAt(Dir.x,Dir.y,Dir.z);
+        camera.rotation.x = 0;
+        camera.rotation.z = 0;
         controlsEnabled = true;
     },
 }
@@ -111,18 +113,18 @@ fpCam.name("First Person");
 var weatherSettings = gui.addFolder('Weather Settings');
 var snowWeather = weatherSettings.add(params, 'snowWeather');
 snowWeather.name("Add Snow Weather");
-weatherSettings.add(params, 'numSnowflakes', 0, 2500).onChange(function (value) {
+weatherSettings.add(params, 'numSnowflakes', 0, 2500).onChange((value) => {
     numSnowflakes = value;
 });
 
 var rainWeather = weatherSettings.add(params, 'rainWeather');
 rainWeather.name("Add Rain Weather");
-weatherSettings.add(params, 'numRaindrops', 0, 10000).onChange(function (value) {
+weatherSettings.add(params, 'numRaindrops', 0, 10000).onChange((value) => {
     numRaindrops = value;
 });
 
-var deleteWeather = weatherSettings.add(params, 'deleteWeather');
-deleteWeather.name("Delete Weather");
+var removeWeather = weatherSettings.add(params, 'removeWeather');
+removeWeather.name("Remove Weather");
 
 var generationSettings = gui.addFolder('Generation Settings');
 
