@@ -86,10 +86,27 @@ var params = {
         clearAsphalt();
         createAshphalt();
         createMountains();
-    }
+    },
+
+    orbitCam : function () {
+        camera.position.set(OrbitPos.x,OrbitPos.y,OrbitPos.z);
+	    camera.lookAt(OrbitDir.x,OrbitDir.y,OrbitDir.z);
+        controlsEnabled = false; 
+    },
+    fpCam : function () {
+        camera.position.set(Pos.x,Pos.y,Pos.z);
+       // camera.lookAt(Dir.x,Dir.y,Dir.z);
+        controlsEnabled = true;
+    },
 }
 
 var cameraSettings = gui.addFolder('Camera Settings');
+
+var orbitCam = cameraSettings.add(params, 'orbitCam');
+orbitCam.name("Orbital");
+
+var fpCam = cameraSettings.add(params, 'fpCam');
+fpCam.name("First Person");
 
 var weatherSettings = gui.addFolder('Weather Settings');
 var snowWeather = weatherSettings.add(params, 'snowWeather');
