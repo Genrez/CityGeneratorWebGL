@@ -26,6 +26,15 @@
 
 				var ratio = window.innerWidth/window.innerHeight;
 				camera = new THREE.PerspectiveCamera(80,ratio,5,5000000);
+				var listener = new THREE.AudioListener();
+				camera.add( listener );
+				const audioLoader = new THREE.AudioLoader();
+				var sound = new THREE.Audio( listener );
+				audioLoader.load( '/Final Assignment/Assignment-4-Project/sounds/footsteps.wav', function( buffer ) {
+					sound.setBuffer( buffer );
+					sound.setLoop( true );
+					sound.setVolume( 1.5 );
+				});
 				var Pos = new THREE.Vector3(0,1,0);
 				camera.position.set(Pos.x,Pos.y,Pos.z);
 				var Dir = new THREE.Vector3(0,0,1);
@@ -158,10 +167,30 @@ function animate() {
      direction.x = Number( moveLeft ) - Number( moveRight );
      direction.normalize();
 
-     if ( moveForward || moveBackward ) velocity.z -= direction.z * 450.0 * delta;
-     if ( (moveForward && shift) || (moveBackward && shift) ) velocity.z -= direction.z * 500.0 * delta;
-     if ( moveLeft || moveRight ) velocity.x -= direction.x * 450.0 * delta;
-     if ( (moveLeft && shift) || (moveRight && shift) ) velocity.x -= direction.x * 500.0 * delta;
+     if ( moveForward || moveBackward ) {
+		 velocity.z -= direction.z * 450.0 * delta;
+		sound.play();
+	}
+     if ( (moveForward && shift) || (moveBackward && shift) ) {
+		 velocity.z -= direction.z * 500.0 * delta;
+		 sound.playbackRate = 1.5;
+		 sound.play();
+	 }
+     if ( moveLeft || moveRight ) {
+		 velocity.x -= direction.x * 450.0 * delta;
+		 sound.play();
+	 }
+     if ( (moveLeft && shift) || (moveRight && shift) ) {
+		 velocity.x -= direction.x * 500.0 * delta;
+		 sound.playbackRate = 1.5;
+		 sound.play();
+	 }
+	 if (!moveForward && !moveBackward && !moveLeft && !moveRight) {
+		 sound.pause();
+	 }
+	 if (!shift) {
+		 sound.playbackRate = 1;
+	 }
      if ( space ) {
         if ( controls.getObject().position.y < 13) {
 			velocity.y += 1 * 500.0 * delta;
