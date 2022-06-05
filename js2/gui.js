@@ -128,6 +128,7 @@ var removeWeather = weatherSettings.add(params, 'removeWeather');
 removeWeather.name("Remove Weather");
 
 var generationSettings = gui.addFolder('Generation Settings');
+generationSettings.open();
 
 generationSettings.add(params, 'spaceBetwBuild', 72, 150);
 generationSettings.add(params, 'buildingScale', 1, 20);
