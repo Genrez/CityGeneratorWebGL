@@ -27,8 +27,12 @@ ADDITIONS:
 --Added mini-manual at the left side of the screen, giving camera, 
   control information, etc.
 
+--Sky and Light settings remain the same
+
 CONTROLS:
 --Users can press E to spawn a building at their location.
 
 ETC:
 --Foodstep sounds can be heard when moving.
+--Added Snow sounds
+--Added Rain sounds

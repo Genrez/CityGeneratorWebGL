@@ -35,6 +35,23 @@
 					sound.setLoop( true );
 					sound.setVolume( 1.5 );
 				});
+
+				const audioLoader2 = new THREE.AudioLoader();
+				var rain = new THREE.Audio( listener );
+				audioLoader2.load( '/sounds/rain.wav', function( buffer2 ) {
+					rain.setBuffer( buffer2 );
+					rain.setLoop( true );
+					rain.setVolume( 1.2 );
+				});
+
+				const audioLoader3 = new THREE.AudioLoader();
+				var snow = new THREE.Audio( listener );
+				audioLoader3.load( '/sounds/snow.wav', function( buffer3 ) {
+					snow.setBuffer( buffer3 );
+					snow.setLoop( true );
+					snow.setVolume( 0.5 );
+				});
+
 				var Pos = new THREE.Vector3(0,1,0);
 				camera.position.set(Pos.x,Pos.y,Pos.z);
 				var Dir = new THREE.Vector3(0,0,1);
@@ -145,11 +162,17 @@ function animate() {
    requestAnimationFrame( animate );
    var mesh = scene.getObjectByName("snow");
    if (mesh) {
+   snow.play() 
    updateParticles();
+   } else {
+	   snow.pause();
    }
    var mesh = scene.getObjectByName("rain");
    if (mesh) {
+   rain.play();
    updateParticlesRain()
+   } else {
+	   rain.pause();
    }
    render();
    update();
