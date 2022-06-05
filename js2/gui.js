@@ -49,6 +49,7 @@ var params = {
     },
 
     addMountain: () => {
+        clearMountains();
         createMountains();
     },
 

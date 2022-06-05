@@ -1,0 +1,34 @@
+Final Changes from Presentation:
+
+ADDITIONS:
+--Added Camera Settings
+    * Orbital View - changes camera to orbital view
+    * First Person View - changes camera to FP view
+
+--Added Weather Settings
+    * Snow Weather - adds falling snow in the scene
+    * Rain Weather - adds falling rain in the scene
+    * Adjustable particle count
+
+--Added Generation Settings
+    * Generate City - generates random buildings in the area
+    * Clear City - clears all the buildings
+    * Add Ground - adds only the asphalt ground
+    * Clear Ground - removes the asphalt ground, and deletes any buildings on it.
+    * Add Mountains - adds only the mountains
+    * Clear Mountains - removes the mountains
+    * Building Density and Scale are adjustable
+
+--Added Plane Settings 
+    * Generate Plane - generates both mountain and ground
+    * Mountain Displacement, Z and X axis of both mountain and ground can be
+      adjusted
+
+--Added mini-manual at the left side of the screen, giving camera, 
+  control information, etc.
+
+CONTROLS:
+--Users can press E to spawn a building at their location.
+
+ETC:
+--Foodstep sounds can be heard when moving.
